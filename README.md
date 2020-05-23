@@ -1,3 +1,1 @@
-# nasm
-# assembly
 # assembly
