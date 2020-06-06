@@ -1,0 +1,29 @@
+# ----------------------------------------------------
+#   Debugger Input Script
+# ----------------------------------------------------
+echo \n\n
+break last
+run
+set pagination off
+set logging file out.txt
+set logging overwrite
+set loggin on
+set prompt
+echo ------------------------------------------------------------ \n
+echo display variables \n\n
+echo bResult:\n
+x/xb &bResult
+x/db &bResult
+echo \n wResult:\n
+x/xh &wResult
+x/dh &wResult
+echo \n dResult:\n
+x/xw &dResult
+x/dw &dResult
+echo \n
+echo \n qResult:\n
+x/xg &qResult
+x/dg &qResult
+echo \n\n
+set logging off
+quit
