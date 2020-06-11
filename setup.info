@@ -1,0 +1,18 @@
+To assemble, link and load example.asm:
+  chmod +x asm64 (this will only need to be done once)
+  ./asm64 example (the .asm extension is added by the asm64 bash script file)
+
+To run the debugger input file, which will also start the program,
+add breakpoints, and display the outputs you specify:
+  gdb example (this will start the debugger - you could also do 'ddd example')
+  then at the (gdb prompt)
+  source gdbIn.txt
+
+To assemble, link, and load scratch.asm
+  ./asm64 scratch
+Then to debug
+  gdb scratch
+Set a breakpoint
+  break last
+Run the program
+  run

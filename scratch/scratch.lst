@@ -1,0 +1,29 @@
+     1                                 %line 1+1 scratch.asm
+     2                                 [section .data]
+     3                                 
+     4                                 EXIT_SUCCESS equ 0
+     5                                 SYS_exit equ 60
+     6                                 
+     7                                 
+     8                                 
+     9 00000000 00                     bVal db 0
+    10                                 
+    11                                 
+    12                                 
+    13                                 
+    14                                 
+    15                                 [section .text]
+    16                                 [global _start]
+    17                                 _start:
+    18                                 
+    19 00000000 48C7C0F4010000          mov rax, 500
+    20 00000007 880425[00000000]        mov byte [bVal], al
+    21                                 
+    22                                 
+    23                                 
+    24                                 
+    25                                 
+    26                                 last:
+    27 0000000E 48C7C03C000000          mov rax, SYS_exit
+    28 00000015 48C7C700000000          mov rdi, EXIT_SUCCESS
+    29 0000001C 0F05                    syscall
