@@ -13,3 +13,6 @@
 *.bc
 
 # End of https://www.gitignore.io/api/assembler
+
+# Added by me
+*.info
