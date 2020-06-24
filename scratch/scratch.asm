@@ -4,10 +4,10 @@ EXIT_SUCCESS     equ      0             ; succesful operation
 SYS_exit         equ      60            ; call code for terminate
 
 ; variable declarations
-
-dquad1      ddq     0x1A000000000000000
-dquad2      ddq     0x2C000000000000000
-dqsum       ddq     0
+wNumA     dw      1200
+wNumB     dw      -1200
+wAns1     dw      0
+wAns2     dw      0
 
 
 ; *****************************************************************************
@@ -17,14 +17,10 @@ section          .text
 global _start
 _start:
 
-  mov       rax, qword [dquad1]
-  mov       rdx, qword [dquad1+8]
+  mov     ax, word[wNumA]
+  imul    ax, -13
+  mov     word[wAns1], ax
 
-  add       rax, qword [dquad2]
-  adc       rdx, qword [dquad2+8]
-
-  mov       qword [dqsum], rax
-  mov       qword [dqsum+8], rdx
 
 
 ; *****************************************************************************

@@ -5,36 +5,29 @@
      5                                 SYS_exit equ 60
      6                                 
      7                                 
-     8                                 
-     9 00000000 00000000000000A001-    dquad1 ddq 0x1A000000000000000
-    10 00000000 00000000000000     
-    11 00000010 00000000000000C002-    dquad2 ddq 0x2C000000000000000
-    12 00000010 00000000000000     
-    13 00000020 000000000000000000-    dqsum ddq 0
-    14 00000020 00000000000000     
+     8 00000000 B004                   wNumA dw 1200
+     9 00000002 50FB                   wNumB dw -1200
+    10 00000004 0000                   wAns1 dw 0
+    11 00000006 0000                   wAns2 dw 0
+    12                                 
+    13                                 
+    14                                 
     15                                 
     16                                 
-    17                                 
-    18                                 
-    19                                 
-    20                                 [section .text]
-    21                                 [global _start]
-    22                                 _start:
-    23                                 
-    24 00000000 488B0425[00000000]      mov rax, qword [dquad1]
-    25 00000008 488B1425[08000000]      mov rdx, qword [dquad1+8]
+    17                                 [section .text]
+    18                                 [global _start]
+    19                                 _start:
+    20                                 
+    21 00000000 668B0425[00000000]      mov ax, word[wNumA]
+    22 00000008 666BC0F3                imul ax, -13
+    23 0000000C 66890425[00000000]      mov word[wAns1], ax
+    24                                 
+    25                                 
     26                                 
-    27 00000010 48030425[00000000]      add rax, qword [dquad2]
-    28 00000018 48131425[08000000]      adc rdx, qword [dquad2+8]
+    27                                 
+    28                                 
     29                                 
-    30 00000020 48890425[00000000]      mov qword [dqsum], rax
-    31 00000028 48891425[08000000]      mov qword [dqsum+8], rdx
-    32                                 
-    33                                 
-    34                                 
-    35                                 
-    36                                 
-    37                                 last:
-    38 00000030 48C7C03C000000          mov rax, SYS_exit
-    39 00000037 48C7C700000000          mov rdi, EXIT_SUCCESS
-    40 0000003E 0F05                    syscall
+    30                                 last:
+    31 00000014 48C7C03C000000          mov rax, SYS_exit
+    32 0000001B 48C7C700000000          mov rdi, EXIT_SUCCESS
+    33 00000022 0F05                    syscall
