@@ -4,11 +4,14 @@ EXIT_SUCCESS     equ      0             ; succesful operation
 SYS_exit         equ      60            ; call code for terminate
 
 ; variable declarations
-wNumA     dw      1200
-wNumB     dw      -1200
-wAns1     dw      0
-wAns2     dw      0
 
+qNumA   dq    730000
+qNumB   dq    -13456
+qNumC   dq    -1279
+qAns1   dq    0
+qAns2   dq    0
+qRem2   dq    0
+qAns3   dq    0
 
 ; *****************************************************************************
 ; Code Section
@@ -17,11 +20,12 @@ section          .text
 global _start
 _start:
 
-  mov     ax, word[wNumA]
-  imul    ax, -13
-  mov     word[wAns1], ax
-
-
+mov   rdx, -88888888
+mov   rax, qword[qNumA]
+cqo
+mov   rbx, 9
+idiv  rbx
+mov   qword[qAns1], rax
 
 ; *****************************************************************************
 ; Done, terminate program.
