@@ -5,7 +5,7 @@ SYS_exit         equ      60            ; call code for terminate
 
 ; variable declarations
 
-
+x     db      10110011b
 
 ; *****************************************************************************
 ; Code Section
@@ -14,8 +14,8 @@ section          .text
 global _start
 _start:
 
-mov     ax, 1100_1010b
-not     ax
+mov   cl, byte[x]
+shl   cl, 1
 
 ; *****************************************************************************
 ; Done, terminate program.

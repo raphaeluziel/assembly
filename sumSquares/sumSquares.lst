@@ -1,0 +1,53 @@
+     1                                 %line 1+1 sumSquares.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 
+    10                                 [section .data]
+    11                                 
+    12                                 
+    13                                 
+    14                                 
+    15                                 EXIT_SUCCESS equ 0
+    16                                 SYS_exit equ 60
+    17                                 
+    18                                 
+    19                                 
+    20                                 
+    21 00000000 0A000000               n dd 10
+    22 00000004 0000000000000000       sumOfSquares dq 0
+    23                                 
+    24                                 
+    25                                 
+    26                                 
+    27                                 [section .text]
+    28                                 [global _start]
+    29                                 _start:
+    30                                 
+    31                                 
+    32                                 
+    33                                 
+    34                                 
+    35                                 
+    36 00000000 48C7C301000000          mov rbx, 1
+    37 00000007 8B0C25[00000000]        mov ecx, dword[n]
+    38                                 sumLoop:
+    39 0000000E 4889D8                  mov rax, rbx
+    40 00000011 48F7E0                  mul rax
+    41 00000014 48010425[00000000]      add qword[sumOfSquares], rax
+    42 0000001C 48FFC3                  inc rbx
+    43 0000001F E2EB                    loop sumLoop
+    44                                 
+    45                                 
+    46                                 
+    47                                 
+    48                                 
+    49                                 
+    50                                 last:
+    51 00000021 48C7C03C000000          mov rax, SYS_exit
+    52 00000028 48C7C700000000          mov rdi, EXIT_SUCCESS
+    53 0000002F 0F05                    syscall
