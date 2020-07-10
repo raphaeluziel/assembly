@@ -1,0 +1,116 @@
+     1                                 %line 1+1 proj7-2.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 
+    10                                 [section .data]
+    11                                 
+    12                                 
+    13                                 
+    14                                 
+    15                                 EXIT_SUCCESS equ 0
+    16                                 SYS_exit equ 60
+    17                                 
+    18                                 
+    19                                 
+    20                                 
+    21 00000000 B2                     bNum1 db -78
+    22 00000001 03                     bNum2 db 3
+    23 00000002 0E                     bNum3 db 14
+    24 00000003 05                     bNum4 db 5
+    25 00000004 4300                   wNum1 dw 67
+    26                                 
+    27 00000006 00                     bAns1 db 0
+    28 00000007 00                     bAns2 db 0
+    29 00000008 00                     bAns3 db 0
+    30                                 
+    31 00000009 00                     bAns6 db 0
+    32 0000000A 00                     bAns7 db 0
+    33 0000000B 00                     bAns8 db 0
+    34                                 
+    35 0000000C 0000                   wAns11 dw 0
+    36 0000000E 0000                   wAns12 dw 0
+    37 00000010 0000                   wAns13 dw 0
+    38                                 
+    39 00000012 00                     bAns16 db 0
+    40 00000013 00                     bAns17 db 0
+    41 00000014 00                     bAns18 db 0
+    42 00000015 00                     bRem18 db 0
+    43                                 
+    44                                 
+    45                                 
+    46                                 
+    47                                 
+    48                                 [section .text]
+    49                                 [global _start]
+    50                                 _start:
+    51                                 
+    52                                 
+    53                                 
+    54                                 
+    55                                 
+    56                                 
+    57 00000000 8A0425[00000000]        mov al, byte [bNum1]
+    58 00000007 020425[00000000]        add al, byte [bNum2]
+    59 0000000E 880425[00000000]        mov byte [bAns1], al
+    60                                 
+    61 00000015 8A0425[00000000]        mov al, byte [bNum1]
+    62 0000001C 020425[00000000]        add al, byte [bNum3]
+    63 00000023 880425[00000000]        mov byte [bAns2], al
+    64                                 
+    65 0000002A 8A0425[00000000]        mov al, byte [bNum3]
+    66 00000031 020425[00000000]        add al, byte [bNum4]
+    67 00000038 880425[00000000]        mov byte [bAns3], al
+    68                                 
+    69 0000003F 8A0425[00000000]        mov al, byte [bNum1]
+    70 00000046 2A0425[00000000]        sub al, byte [bNum2]
+    71 0000004D 880425[00000000]        mov byte [bAns6], al
+    72                                 
+    73 00000054 8A0425[00000000]        mov al, byte [bNum1]
+    74 0000005B 2A0425[00000000]        sub al, byte [bNum3]
+    75 00000062 880425[00000000]        mov byte [bAns7], al
+    76                                 
+    77 00000069 8A0425[00000000]        mov al, byte [bNum2]
+    78 00000070 2A0425[00000000]        sub al, byte [bNum4]
+    79 00000077 880425[00000000]        mov byte [bAns8], al
+    80                                 
+    81 0000007E 8A0425[00000000]        mov al, byte [bNum1]
+    82 00000085 F62425[00000000]        mul byte [bNum3]
+    83 0000008C 66890425[00000000]      mov word [wAns11], ax
+    84                                 
+    85 00000094 8A0425[00000000]        mov al, byte [bNum2]
+    86 0000009B F62425[00000000]        mul byte [bNum2]
+    87 000000A2 66890425[00000000]      mov word [wAns12], ax
+    88                                 
+    89 000000AA 8A0425[00000000]        mov al, byte [bNum2]
+    90 000000B1 F62425[00000000]        mul byte [bNum4]
+    91 000000B8 66890425[00000000]      mov word [wAns13], ax
+    92                                 
+    93 000000C0 8A0425[00000000]        mov al, byte [bNum1]
+    94 000000C7 6698                    cbw
+    95                                 
+    96 000000C9 F63425[00000000]        div byte [bNum2]
+    97 000000D0 880425[00000000]        mov byte [bAns16], al
+    98                                 
+    99 000000D7 8A0425[00000000]        mov al, byte [bNum3]
+   100 000000DE 6698                    cbw
+   101 000000E0 F63425[00000000]        div byte [bNum4]
+   102 000000E7 880425[00000000]        mov byte [bAns17], al
+   103                                 
+   104 000000EE 668B0425[00000000]      mov ax, word [wNum1]
+   105 000000F6 F63425[00000000]        div byte [bNum4]
+   106 000000FD 880425[00000000]        mov byte [bAns18], al
+   107 00000104 882425[00000000]        mov byte [bRem18], ah
+   108                                 
+   109                                 
+   110                                 
+   111                                 
+   112                                 
+   113                                 last:
+   114 0000010B 48C7C03C000000          mov rax, SYS_exit
+   115 00000112 48C7C700000000          mov rdi, EXIT_SUCCESS
+   116 00000119 0F05                    syscall
