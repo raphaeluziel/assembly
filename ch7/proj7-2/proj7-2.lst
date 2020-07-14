@@ -19,10 +19,10 @@
     19                                 
     20                                 
     21 00000000 B2                     bNum1 db -78
-    22 00000001 03                     bNum2 db 3
-    23 00000002 0E                     bNum3 db 14
+    22 00000001 CE                     bNum2 db -50
+    23 00000002 F2                     bNum3 db -14
     24 00000003 05                     bNum4 db 5
-    25 00000004 4300                   wNum1 dw 67
+    25 00000004 BDFF                   wNum1 dw -67
     26                                 
     27 00000006 00                     bAns1 db 0
     28 00000007 00                     bAns2 db 0
@@ -79,30 +79,30 @@
     79 00000077 880425[00000000]        mov byte [bAns8], al
     80                                 
     81 0000007E 8A0425[00000000]        mov al, byte [bNum1]
-    82 00000085 F62425[00000000]        mul byte [bNum3]
+    82 00000085 F62C25[00000000]        imul byte [bNum3]
     83 0000008C 66890425[00000000]      mov word [wAns11], ax
     84                                 
     85 00000094 8A0425[00000000]        mov al, byte [bNum2]
-    86 0000009B F62425[00000000]        mul byte [bNum2]
+    86 0000009B F62C25[00000000]        imul byte [bNum2]
     87 000000A2 66890425[00000000]      mov word [wAns12], ax
     88                                 
     89 000000AA 8A0425[00000000]        mov al, byte [bNum2]
-    90 000000B1 F62425[00000000]        mul byte [bNum4]
+    90 000000B1 F62C25[00000000]        imul byte [bNum4]
     91 000000B8 66890425[00000000]      mov word [wAns13], ax
     92                                 
     93 000000C0 8A0425[00000000]        mov al, byte [bNum1]
     94 000000C7 6698                    cbw
     95                                 
-    96 000000C9 F63425[00000000]        div byte [bNum2]
+    96 000000C9 F63C25[00000000]        idiv byte [bNum2]
     97 000000D0 880425[00000000]        mov byte [bAns16], al
     98                                 
     99 000000D7 8A0425[00000000]        mov al, byte [bNum3]
    100 000000DE 6698                    cbw
-   101 000000E0 F63425[00000000]        div byte [bNum4]
+   101 000000E0 F63C25[00000000]        idiv byte [bNum4]
    102 000000E7 880425[00000000]        mov byte [bAns17], al
    103                                 
    104 000000EE 668B0425[00000000]      mov ax, word [wNum1]
-   105 000000F6 F63425[00000000]        div byte [bNum4]
+   105 000000F6 F63C25[00000000]        idiv byte [bNum4]
    106 000000FD 880425[00000000]        mov byte [bAns18], al
    107 00000104 882425[00000000]        mov byte [bRem18], ah
    108                                 

@@ -32,13 +32,13 @@ echo \nbAns8:\n
 x/xb &bAns8
 x/db &bAns8
 
-echo \nbAns11:\n
+echo \nwAns11:\n
 x/xh &wAns11
 x/dh &wAns11
-echo \nbAns12:\n
+echo \nwAns12:\n
 x/xh &wAns12
 x/dh &wAns12
-echo \nbAns13:\n
+echo \nwAns13:\n
 x/xh &wAns13
 x/dh &wAns13
 
