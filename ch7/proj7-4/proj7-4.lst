@@ -1,4 +1,4 @@
-     1                                 %line 1+1 proj7-3.asm
+     1                                 %line 1+1 proj7-4.asm
      2                                 
      3                                 
      4                                 
@@ -19,10 +19,10 @@
     19                                 
     20                                 
     21 00000000 781E                   wNum1 dw 7800
-    22 00000002 B04F                   wNum2 dw 20400
-    23 00000004 6208                   wNum3 dw 2146
+    22 00000002 50B0                   wNum2 dw -20400
+    23 00000004 9EF7                   wNum3 dw -2146
     24 00000006 3900                   wNum4 dw 57
-    25 00000008 12060100               dNum1 dd 67090
+    25 00000008 EEF9FEFF               dNum1 dd -67090
     26                                 
     27 0000000C 0000                   wAns1 dw 0
     28 0000000E 0000                   wAns2 dw 0
@@ -79,41 +79,41 @@
     79 00000088 66890425[00000000]      mov word [wAns8], ax
     80                                 
     81 00000090 668B0425[00000000]      mov ax, word [wNum1]
-    82 00000098 66F72425[00000000]      mul word [wNum3]
+    82 00000098 66F72C25[00000000]      imul word [wNum3]
     83 000000A0 66890425[00000000]      mov word [dAns11], ax
     84 000000A8 66891425[02000000]      mov word [dAns11+2], dx
     85                                 
     86 000000B0 668B0425[00000000]      mov ax, word [wNum2]
-    87 000000B8 66F72425[00000000]      mul word [wNum2]
+    87 000000B8 66F72C25[00000000]      imul word [wNum2]
     88 000000C0 66890425[00000000]      mov word [dAns12], ax
     89 000000C8 66891425[02000000]      mov word [dAns12+2], dx
     90                                 
     91 000000D0 668B0425[00000000]      mov ax, word [wNum2]
-    92 000000D8 66F72425[00000000]      mul word [wNum4]
+    92 000000D8 66F72C25[00000000]      imul word [wNum4]
     93 000000E0 66890425[00000000]      mov word [dAns13], ax
     94 000000E8 66891425[02000000]      mov word [dAns13+2], dx
     95                                 
     96 000000F0 668B0425[00000000]      mov ax, word [wNum1]
     97 000000F8 6699                    cwd
-    98 000000FA 66F73425[00000000]      div word [wNum2]
+    98 000000FA 66F73C25[00000000]      idiv word [wNum2]
     99 00000102 66890425[00000000]      mov word [wAns16], ax
    100                                 
    101 0000010A 668B0425[00000000]      mov ax, word [wNum3]
    102 00000112 6699                    cwd
-   103 00000114 66F73425[00000000]      div word [wNum4]
+   103 00000114 66F73C25[00000000]      idiv word [wNum4]
    104 0000011C 66890425[00000000]      mov word [wAns17], ax
    105                                 
    106 00000124 668B0425[00000000]      mov ax, word [dNum1]
-   107                                 
-   108 0000012C 66F73425[00000000]      div word [wNum4]
-   109 00000134 66890425[00000000]      mov word [wAns18], ax
-   110 0000013C 66891425[00000000]      mov word [wRem18], dx
+   107 0000012C 668B1425[02000000]      mov dx, word [dNum1+2]
+   108 00000134 66F73C25[00000000]      idiv word [wNum4]
+   109 0000013C 66890425[00000000]      mov word [wAns18], ax
+   110 00000144 66891425[00000000]      mov word [wRem18], dx
    111                                 
    112                                 
    113                                 
    114                                 
    115                                 
    116                                 last:
-   117 00000144 48C7C03C000000          mov rax, SYS_exit
-   118 0000014B 48C7C700000000          mov rdi, EXIT_SUCCESS
-   119 00000152 0F05                    syscall
+   117 0000014C 48C7C03C000000          mov rax, SYS_exit
+   118 00000153 48C7C700000000          mov rdi, EXIT_SUCCESS
+   119 0000015A 0F05                    syscall

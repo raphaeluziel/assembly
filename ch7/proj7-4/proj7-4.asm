@@ -18,10 +18,10 @@ SYS_exit         equ      60            ; caxl code for terminate
 ; Define data
 
 wNum1       dw        7800
-wNum2       dw        20400
-wNum3       dw        2146
+wNum2       dw        -20400
+wNum3       dw        -2146
 wNum4       dw        57
-dNum1       dd        67090
+dNum1       dd        -67090
 
 wAns1       dw        0
 wAns2       dw        0
@@ -53,58 +53,58 @@ _start:
 ; for (i=1; i<=n; i++)
 ;   sumOfSquares += i^2
 
-  mov     ax, word [wNum1]    ; wAns1 = wNum1 + wNum2 = 28,200
+  mov     ax, word [wNum1]    ; wAns1 = wNum1 + wNum2 = -12,600
   add     ax, word [wNum2]
   mov     word [wAns1], ax
 
-  mov     ax, word [wNum1]    ; wAns2 = wNum1 + wNum3 = 9,946
+  mov     ax, word [wNum1]    ; wAns2 = wNum1 + wNum3 = 5,654
   add     ax, word [wNum3]
   mov     word [wAns2], ax
 
-  mov     ax, word [wNum3]    ; wAns3 = wNum3 + wNum4 = 2,203
+  mov     ax, word [wNum3]    ; wAns3 = wNum3 + wNum4 = -2,089
   add     ax, word [wNum4]
   mov     word [wAns3], ax
 
-  mov     ax, word [wNum1]    ; wAns6 = wNum1 - wNum2 = -12,600
+  mov     ax, word [wNum1]    ; wAns6 = wNum1 - wNum2 = 28,200
   sub     ax, word [wNum2]
   mov     word [wAns6], ax
 
-  mov     ax, word [wNum1]    ; wAns7 = wNum1 - wNum3 = 5,654
+  mov     ax, word [wNum1]    ; wAns7 = wNum1 - wNum3 = 9,946
   sub     ax, word [wNum3]
   mov     word [wAns7], ax
 
-  mov     ax, word [wNum2]    ; wAns8 = wNum2 - wNum4 = 20,343
+  mov     ax, word [wNum2]    ; wAns8 = wNum2 - wNum4 = -20,457
   sub     ax, word [wNum4]
   mov     word [wAns8], ax
 
-  mov     ax, word [wNum1]    ; dAns11 = wNum1 * wNum3 = 159,120,000
-  mul     word [wNum3]
+  mov     ax, word [wNum1]    ; dAns11 = wNum1 * wNum3 = -16,738,800
+  imul    word [wNum3]
   mov     word [dAns11], ax
   mov     word [dAns11+2], dx
 
   mov     ax, word [wNum2]    ; dAns12 = wNum2 * wNum2 = 416,160,000
-  mul     word [wNum2]
+  imul    word [wNum2]
   mov     word [dAns12], ax
   mov     word [dAns12+2], dx
 
-  mov     ax, word [wNum2]    ; dAns13 = wNum2 * wNum4 = 1,162,800
-  mul     word [wNum4]
+  mov     ax, word [wNum2]    ; dAns13 = wNum2 * wNum4 = -1,162,800
+  imul    word [wNum4]
   mov     word [dAns13], ax
   mov     word [dAns13+2], dx
 
   mov     ax, word [wNum1]    ; wAns16 = wNum1 / wNum2 = 0 R 7,800
   cwd                         ; widen word to double
-  div     word [wNum2]
+  idiv    word [wNum2]
   mov     word [wAns16], ax
 
-  mov     ax, word [wNum3]    ; wAns17 = wNum3 / wNum4 = 37 R 37
+  mov     ax, word [wNum3]    ; wAns17 = wNum3 / wNum4 = -37 R -37
   cwd
-  div     word [wNum4]
+  idiv    word [wNum4]
   mov     word [wAns17], ax   ; The remainder would be in dx
 
-  mov     ax, word [dNum1]    ; wAns18 = dNum1 / wNum4 = 1,177 R 1
+  mov     ax, word [dNum1]    ; wAns18 = dNum1 / wNum4 = -1,177 R -1
   mov     dx, word [dNum1+2]
-  div     word [wNum4]
+  idiv    word [wNum4]
   mov     word [wAns18], ax
   mov     word [wRem18], dx
 
