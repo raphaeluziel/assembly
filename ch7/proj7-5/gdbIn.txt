@@ -1,0 +1,60 @@
+# ----------------------------------------------------
+#   Debugger Input Script
+# ----------------------------------------------------
+echo \n\n
+break last
+run
+set pagination off
+set logging file out.txt
+set logging overwrite
+set logging on
+set prompt
+echo ------------------------------------------------------------ \n
+echo display variables \n\n
+
+echo dAns1:\n
+x/xw &dAns1
+x/dw &dAns1
+echo \ndAns2:\n
+x/xw &dAns2
+x/dw &dAns2
+echo \ndAns3:\n
+x/xw &dAns3
+x/dw &dAns3
+
+echo \ndAns6:\n
+x/xw &dAns6
+x/dw &dAns6
+echo \ndAns7:\n
+x/xw &dAns7
+x/dw &dAns7
+echo \ndAns8:\n
+x/xw &dAns8
+x/dw &dAns8
+
+echo \nqAns11:\n
+x/xg &qAns11
+x/dg &qAns11
+echo \nqAns12:\n
+x/xg &qAns12
+x/dg &qAns12
+echo \nqAns13:\n
+x/xg &qAns13
+x/dg &qAns13
+
+echo \ndAns16:\n
+x/xw &dAns16
+x/dw &dAns16
+echo \ndAns17:\n
+x/xw &dAns17
+x/dw &dAns17
+echo \ndAns18:\n
+x/xw &dAns18
+x/dw &dAns18
+echo \ndRem18:\n
+x/xw &dRem18
+x/dw &dRem18
+
+echo \n\n
+set logging off
+quit
