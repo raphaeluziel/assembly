@@ -1,0 +1,64 @@
+     1                                 %line 1+1 fibonacci.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 
+    10                                 [section .data]
+    11                                 
+    12                                 
+    13                                 
+    14                                 
+    15                                 EXIT_SUCCESS equ 0
+    16                                 SYS_exit equ 60
+    17                                 
+    18                                 
+    19                                 
+    20                                 
+    21 00000000 1100000000000000       n dq 17
+    22 00000008 0000000000000000       fib dq 0
+    23                                 
+    24                                 
+    25                                 
+    26                                 
+    27                                 [section .text]
+    28                                 [global _start]
+    29                                 _start:
+    30                                 
+    31                                 
+    32                                 
+    33                                 
+    34                                 
+    35                                 
+    36                                 
+    37 00000000 488B0C25[00000000]      mov rcx, qword[n]
+    38 00000008 4883F901                cmp rcx, 1
+    39 0000000C 7E2F                    jle nLessThan2
+    40                                 
+    41 0000000E 48C7C000000000          mov rax, 0
+    42 00000015 48C7C301000000          mov rbx, 1
+    43 0000001C 48C7C201000000          mov rdx, 1
+    44 00000023 4883E901                sub rcx, 1
+    45                                 
+    46                                 addLoop:
+    47 00000027 4801D8                  add rax, rbx
+    48 0000002A 4889C2                  mov rdx, rax
+    49 0000002D 4889D8                  mov rax, rbx
+    50 00000030 4889D3                  mov rbx, rdx
+    51 00000033 E2F0                    loop addLoop
+    52 00000035 48891C25[00000000]      mov qword[fib], rbx
+    53 0000003D EB06                    jmp last
+    54                                 
+    55                                 nLessThan2:
+    56 0000003F 48890C25[00000000]      mov qword[fib], rcx
+    57                                 
+    58                                 
+    59                                 
+    60                                 
+    61                                 last:
+    62 00000047 48C7C03C000000          mov rax, SYS_exit
+    63 0000004E 48C7C700000000          mov rdi, EXIT_SUCCESS
+    64 00000055 0F05                    syscall

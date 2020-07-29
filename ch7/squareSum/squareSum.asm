@@ -1,4 +1,4 @@
-; Program to find the sum of squares from 1 to n
+; Program to find the square of the sum from 1 to n
 
 ; Raphael Uziel
 ; July 5, 2020
