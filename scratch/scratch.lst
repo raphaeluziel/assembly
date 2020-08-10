@@ -6,7 +6,7 @@
      6                                 
      7                                 
      8                                 
-     9 00000000 B3                     x db 10110011
+     9 00000000 9C1C                   var dw 7324
     10                                 
     11                                 
     12                                 
@@ -15,13 +15,13 @@
     15                                 [global _start]
     16                                 _start:
     17                                 
-    18 00000000 8A0C25[00000000]       mov cl, byte[x]
-    19 00000007 D0E1                   shl cl, 1
+    18 00000000 B8[00000000]           mov eax, var
+    19 00000005 678B18                 mov ebx, [eax]
     20                                 
     21                                 
     22                                 
     23                                 
     24                                 last:
-    25 00000009 48C7C03C000000          mov rax, SYS_exit
-    26 00000010 48C7C700000000          mov rdi, EXIT_SUCCESS
-    27 00000017 0F05                    syscall
+    25 00000008 48C7C03C000000          mov rax, SYS_exit
+    26 0000000F 48C7C700000000          mov rdi, EXIT_SUCCESS
+    27 00000016 0F05                    syscall
