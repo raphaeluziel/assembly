@@ -1,0 +1,80 @@
+     1                                 %line 1+1 proj8-2.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 
+    10                                 [section .data]
+    11                                 
+    12                                 
+    13                                 
+    14                                 
+    15                                 EXIT_SUCCESS equ 0
+    16                                 SYS_exit equ 60
+    17                                 
+    18                                 
+    19                                 
+    20                                 
+    21 00000000 EA030000EC030000EE-    lst dd 1002, 1004, 1006, 1008, 1010
+    22 00000000 030000F0030000F203-
+    23 00000000 0000               
+    24 00000014 05000000               len dd 5
+    25 00000018 00000000               sum dd 0
+    26 0000001C 00000000               max dd 0
+    27 00000020 00000000               min dd 0
+    28 00000024 00000000               avg dd 0
+    29                                 
+    30                                 
+    31                                 
+    32                                 
+    33                                 [section .text]
+    34                                 [global _start]
+    35                                 _start:
+    36                                 
+    37                                 
+    38                                 
+    39                                 
+    40 00000000 8B0425[00000000]        mov eax, dword[lst]
+    41 00000007 890425[00000000]        mov dword[min], eax
+    42 0000000E 890425[00000000]        mov dword[max], eax
+    43                                 
+    44 00000015 8B0C25[00000000]        mov ecx, dword[len]
+    45 0000001C 48C7C600000000          mov rsi, 0
+    46                                 
+    47                                 statsLoop:
+    48 00000023 8B04B5[00000000]        mov eax, dword[lst + (rsi*4)]
+    49 0000002A 010425[00000000]        add dword[sum], eax
+    50                                 
+    51 00000031 3B0425[00000000]        cmp eax, dword[min]
+    52 00000038 7305                    jae notNewMin
+    53 0000003A 890425[00000000]        mov dword[min], eax
+    54                                 
+    55                                 notNewMin:
+    56 00000041 3B0425[00000000]        cmp eax, dword[max]
+    57 00000048 7605                    jbe notNewMax
+    58 0000004A 890425[00000000]        mov dword[max], eax
+    59                                 
+    60                                 notNewMax:
+    61                                 
+    62 00000051 48FFC6                  inc rsi
+    63 00000054 E2CB                    loop statsLoop
+    64                                 
+    65                                 
+    66                                 
+    67                                 
+    68 00000056 8B0425[00000000]        mov eax, dword[sum]
+    69 0000005D BA00000000              mov edx, 0
+    70 00000062 F73425[00000000]        div dword[len]
+    71 00000069 890425[00000000]        mov dword[avg], eax
+    72                                 
+    73                                 
+    74                                 
+    75                                 
+    76                                 
+    77                                 last:
+    78 00000070 48C7C03C000000          mov rax, SYS_exit
+    79 00000077 48C7C700000000          mov rdi, EXIT_SUCCESS
+    80 0000007E 0F05                    syscall

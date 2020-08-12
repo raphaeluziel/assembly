@@ -1,0 +1,30 @@
+# ----------------------------------------------------
+#   Debugger Input Script
+# ----------------------------------------------------
+echo \n\n
+break last
+run
+set pagination off
+set logging file out.txt
+set logging overwrite
+set logging on
+set prompt
+echo ------------------------------------------------------------ \n
+echo display variables \n\n
+
+echo sum of the numbers:
+x/dw &sum
+
+echo max of the numbers:
+x/dw &max
+
+echo min of the numbers:
+x/dw &min
+
+echo averageof the numbers:
+x/dw &avg
+
+
+echo \n\n
+set logging off
+quit

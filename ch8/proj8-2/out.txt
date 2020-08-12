@@ -1,0 +1,9 @@
+------------------------------------------------------------ 
+display variables 
+
+sum of the numbers:0x402018:	5030
+max of the numbers:0x40201c:	1010
+min of the numbers:0x402020:	1002
+averageof the numbers:0x402024:	1006
+
+
