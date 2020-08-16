@@ -1,0 +1,33 @@
+# ----------------------------------------------------
+#   Debugger Input Script
+# ----------------------------------------------------
+echo \n\n
+break last
+run
+set pagination off
+set logging file out.txt
+set logging overwrite
+set logging on
+set prompt
+echo ------------------------------------------------------------ \n
+echo display variables \n\n
+
+echo total area min max sum ave:\n
+
+x/dg &taMin
+x/dg &taMax
+x/dg &taSum
+x/dg &taAve
+
+echo \n
+echo total volume min max sum ave:\n
+
+x/dg &volMin
+x/dg &volMax
+x/dg &volSum
+x/dg &volAve
+
+
+echo \n\n
+set logging off
+quit

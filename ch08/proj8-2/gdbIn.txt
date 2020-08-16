@@ -21,7 +21,7 @@ x/dw &max
 echo min of the numbers:
 x/dw &min
 
-echo averageof the numbers:
+echo average of the numbers:
 x/dw &avg
 
 
