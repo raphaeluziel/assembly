@@ -1,0 +1,25 @@
+------------------------------------------------------------ 
+sum, min, max, average and MIDDLE of list: 
+
+sum of the numbers 
+:0x402020:	8042
+min of the numbers 
+:0x402028:	1002
+max of the numbers 
+:0x402024:	2000
+average of the numbers 
+:0x40202c:	1148
+MIDDLE of the numbers 
+:0x40203c:	1008
+
+------------------------------------------------------------ 
+sum, count and average of numbers divisible by 3: 
+
+sum of numbers divisible by 3 
+:0x402034:	2010
+count of numbers divisible by 3 
+:0x402030:	2
+average of numbers divisible by 3 
+:0x402038:	1005
+
+

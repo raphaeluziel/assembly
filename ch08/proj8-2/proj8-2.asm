@@ -1,4 +1,5 @@
-; Program to sum a list of numbers
+; Program to sum a list of numbers, then find the sum,
+; maximum, minimum, and average of the numbers;
 
 ; Raphael Uziel
 ; August 11, 2020

@@ -1,0 +1,129 @@
+     1                                 %line 1+1 proj8-4.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 
+    10                                 
+    11                                 
+    12                                 
+    13                                 [section .data]
+    14                                 
+    15                                 
+    16                                 
+    17                                 
+    18                                 EXIT_SUCCESS equ 0
+    19                                 SYS_exit equ 60
+    20                                 
+    21                                 
+    22                                 
+    23                                 
+    24 00000000 EA030000EC030000EE-    lst dd 1002, 1004, 1006, 1008, 1010, 1012, 2000
+    25 00000000 030000F0030000F203-
+    26 00000000 0000F4030000D00700-
+    27 00000000 00                 
+    28 0000001C 07000000               len dd 7
+    29                                 
+    30 00000020 00000000               sum dd 0
+    31 00000024 00000000               max dd 0
+    32 00000028 00000000               min dd 0
+    33 0000002C 00000000               avg dd 0
+    34                                 
+    35 00000030 00000000               count3 dd 0
+    36 00000034 00000000               sum3 dd 0
+    37 00000038 00000000               avg3 dd 0
+    38                                 
+    39 0000003C 00000000               middle dd 0
+    40                                 
+    41 00000040 02000000               ddTwo dd 2
+    42 00000044 03000000               ddThree dd 3
+    43                                 
+    44                                 
+    45                                 
+    46                                 
+    47                                 [section .text]
+    48                                 [global _start]
+    49                                 _start:
+    50                                 
+    51                                 
+    52                                 
+    53                                 
+    54                                 
+    55 00000000 8B0425[00000000]        mov eax, dword[lst]
+    56 00000007 890425[00000000]        mov dword[min], eax
+    57 0000000E 890425[00000000]        mov dword[max], eax
+    58                                 
+    59 00000015 8B0C25[00000000]        mov ecx, dword[len]
+    60 0000001C 48C7C600000000          mov rsi, 0
+    61                                 
+    62                                 statsLoop:
+    63 00000023 8B04B5[00000000]        mov eax, dword[lst + (rsi*4)]
+    64 0000002A 010425[00000000]        add dword[sum], eax
+    65                                 
+    66 00000031 3B0425[00000000]        cmp eax, dword[min]
+    67 00000038 7305                    jae notNewMin
+    68 0000003A 890425[00000000]        mov dword[min], eax
+    69                                 
+    70                                 notNewMin:
+    71 00000041 3B0425[00000000]        cmp eax, dword[max]
+    72 00000048 7605                    jbe notNewMax
+    73 0000004A 890425[00000000]        mov dword[max], eax
+    74                                 
+    75                                 notNewMax:
+    76 00000051 8B04B5[00000000]        mov eax, dword[lst + (rsi*4)]
+    77 00000058 99                      cdq
+    78 00000059 F73425[00000000]        div dword[ddThree]
+    79 00000060 83FA00                  cmp edx, 0
+    80 00000063 7513                    jne notDivisibleByThree
+    81 00000065 FF0425[00000000]        inc dword[count3]
+    82 0000006C 8B04B5[00000000]        mov eax, dword[lst + (rsi*4)]
+    83 00000073 010425[00000000]        add dword[sum3], eax
+    84                                 
+    85                                 notDivisibleByThree:
+    86                                 
+    87 0000007A 48FFC6                  inc rsi
+    88 0000007D E2A2                    loop statsLoop
+    89                                 
+    90                                 
+    91                                 
+    92                                 
+    93 0000007F 8B0425[00000000]        mov eax, dword[sum]
+    94 00000086 BA00000000              mov edx, 0
+    95 0000008B F73425[00000000]        div dword[len]
+    96 00000092 890425[00000000]        mov dword[avg], eax
+    97                                 
+    98 00000099 8B0425[00000000]        mov eax, dword[sum3]
+    99 000000A0 BA00000000              mov edx, 0
+   100 000000A5 F73425[00000000]        div dword[count3]
+   101 000000AC 890425[00000000]        mov dword[avg3], eax
+   102                                 
+   103                                 
+   104                                 
+   105                                 
+   106 000000B3 8B0425[00000000]        mov eax, dword[len]
+   107 000000BA 99                      cdq
+   108 000000BB F73425[00000000]        div dword[ddTwo]
+   109 000000C2 83FA00                  cmp edx, 0
+   110 000000C5 740F                    je evenLengthList
+   111 000000C7 678B3C85[00000000]      mov edi, dword[lst + eax*4]
+   112 000000CF 893C25[00000000]        mov dword[middle], edi
+   113 000000D6 EB1E                    jmp last
+   114                                 
+   115                                 evenLengthList:
+   116 000000D8 89C3                    mov ebx, eax
+   117 000000DA 678B049D[FCFFFFFF]      mov eax, dword[lst + ebx*4 - 4]
+   118 000000E2 6703049D[00000000]      add eax, dword[lst + ebx*4]
+   119 000000EA F73425[00000000]        div dword[ddTwo]
+   120 000000F1 890425[00000000]        mov dword[middle], eax
+   121                                 
+   122                                 
+   123                                 
+   124                                 
+   125                                 
+   126                                 last:
+   127 000000F8 48C7C03C000000          mov rax, SYS_exit
+   128 000000FF 48C7C700000000          mov rdi, EXIT_SUCCESS
+   129 00000106 0F05                    syscall
