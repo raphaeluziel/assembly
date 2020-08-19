@@ -1,0 +1,35 @@
+------------------------------------------------------------ 
+sum, min, max, average and MIDDLE of list: 
+
+sum of the numbers 
+:0x402024:	-2959
+min of the numbers 
+:0x40202c:	-9000
+max of the numbers 
+:0x402028:	1012
+average of the numbers 
+:0x402030:	-369
+MIDDLE of the numbers 
+:0x40204c:	1009
+
+------------------------------------------------------------ 
+sum, count and average of numbers divisible by 3: 
+
+sum of numbers divisible by 3 
+:0x402038:	-6990
+count of numbers divisible by 3 
+:0x402034:	3
+average of numbers divisible by 3 
+:0x40203c:	-2330
+
+------------------------------------------------------------ 
+sum, count and average of NEGATIVE numbers: 
+
+sum of NEGATIVE numbers 
+:0x402044:	-9001
+count of NEGATIVE numbers 
+:0x402040:	2
+average of NEGATIVE numbers 
+:0x402048:	-4500
+
+

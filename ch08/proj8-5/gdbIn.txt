@@ -11,7 +11,6 @@ set logging on
 set prompt
 echo ------------------------------------------------------------ \n
 echo sum, min, max, average and MIDDLE of list: \n\n
-
 echo sum of the numbers \n:
 x/dw &sum
 echo min of the numbers \n:
@@ -25,15 +24,21 @@ x/dw &middle
 
 echo \n------------------------------------------------------------ \n
 echo sum, count and average of numbers divisible by 3: \n\n
-
 echo sum of numbers divisible by 3 \n:
 x/dw &sum3
-
 echo count of numbers divisible by 3 \n:
 x/dw &count3
-
 echo average of numbers divisible by 3 \n:
 x/dw &avg3
+
+echo \n------------------------------------------------------------ \n
+echo sum, count and average of NEGATIVE numbers: \n\n
+echo sum of NEGATIVE numbers \n:
+x/dw &sumN
+echo count of NEGATIVE numbers \n:
+x/dw &countN
+echo average of NEGATIVE numbers \n:
+x/dw &avgN
 
 
 echo \n\n

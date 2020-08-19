@@ -5,7 +5,7 @@
 ;                if even number of values, it is the average of the two middle values
 
 ; Raphael Uziel
-; August 18, 2020
+; August 19, 2020
 
 ; *****************************************************************************
 ; Some basic data declarations
@@ -21,8 +21,8 @@ SYS_exit         equ      60            ; caxl code for terminate
 ; -----
 ; Define data
 
-lst         dd      1002, 1004, 1006, 1008, 1010, 1012, 2000
-len         dd      7
+lst         dd      1002, 1004, 1006, 1008, 1010, 1012, -9000, -1
+len         dd      8
 
 sum         dd      0
 max         dd      0
@@ -32,6 +32,10 @@ avg         dd      0
 count3      dd      0
 sum3        dd      0
 avg3        dd      0
+
+countN      dd      0
+sumN        dd      0
+avgN        dd      0
 
 middle      dd      0
 
@@ -61,25 +65,32 @@ statsLoop:
   add     dword[sum], eax;            ; update sum
 
   cmp     eax, dword[min]     ; compare the number to the min
-  jae     notNewMin           ; if number is >= then jump out
+  jge     notNewMin           ; if number is >= then jump out
   mov     dword[min], eax     ; otherwise update the minimum
 
 notNewMin:
   cmp     eax, dword[max]     ; compare the number to the max
-  jbe     notNewMax           ; if number is <= then jump out
+  jle     notNewMax           ; if number is <= then jump out
   mov     dword[max], eax     ; otherwise, update the max
 
 notNewMax:
   mov     eax, dword[lst + (rsi*4)]     ; get the number in the list
   cdq
-  div     dword[ddThree]
+  idiv    dword[ddThree]
   cmp     edx, 0
   jne     notDivisibleByThree
-  inc     dword[count3]
+  inc     dword[count3]                  ; count if divisible by three
   mov     eax, dword[lst + (rsi*4)]
-  add     dword[sum3], eax
+  add     dword[sum3], eax                ; add if divisible by three
 
 notDivisibleByThree:
+  mov     eax, dword[lst + (rsi*4)]     ; get the number in the list
+  cmp     eax, 0
+  jge     notNegative
+  inc     dword[countN]                  ; count if negative
+  add     dword[sumN], eax                ; add if negative
+
+notNegative:
 
   inc     rsi          ; next item
   loop    statsLoop
@@ -88,21 +99,26 @@ notDivisibleByThree:
 ; Find averages
 
   mov     eax, dword[sum]
-  mov     edx, 0
-  div     dword[len]
+  cdq
+  idiv    dword[len]
   mov     dword[avg], eax
 
   mov     eax, dword[sum3]
-  mov     edx, 0
-  div     dword[count3]
+  cdq
+  idiv    dword[count3]
   mov     dword[avg3], eax
+
+  mov     eax, dword[sumN]
+  cdq
+  idiv    dword[countN]
+  mov     dword[avgN], eax
 
 ; -----
 ; Find the MIDDLE value
 
   mov     eax, dword[len]             ; divide len by 2
   cdq
-  div     dword[ddTwo]
+  div     dword[ddTwo]                ; these are both positives, so div can be used
   cmp     edx, 0
   je      evenLengthList              ; if even jump, otherwise find middle value
   mov     edi, dword[lst + eax*4]
@@ -113,7 +129,7 @@ evenLengthList:
   mov     ebx, eax                    ; store len/2 into ebx
   mov     eax, dword[lst + ebx*4 - 4] ; get the first of two middle numbers
   add     eax, dword[lst + ebx*4]     ; get the second of two middle numbers
-  div     dword[ddTwo]                ; divide by two to get the average
+  idiv    dword[ddTwo]                ; divide by two to get the average
   mov     dword[middle], eax
 
 
