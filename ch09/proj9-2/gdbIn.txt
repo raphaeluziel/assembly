@@ -1,0 +1,21 @@
+# ----------------------------------------------------
+#   Debugger Input Script
+# ----------------------------------------------------
+echo \n\n
+break last
+run
+set pagination off
+set logging file out.txt
+set logging overwrite
+set logging on
+set prompt
+echo ------------------------------------------------------------ \n
+
+echo characters in string\n:
+x/9dg &string
+echo palindrome (1 for yes, 0 for no):\n
+x/db  &palindrome
+
+echo \n\n
+set logging off
+quit

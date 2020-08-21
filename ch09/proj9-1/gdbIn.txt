@@ -1,0 +1,22 @@
+# ----------------------------------------------------
+#   Debugger Input Script
+# ----------------------------------------------------
+echo \n\n
+break last
+run
+set pagination off
+set logging file out.txt
+set logging overwrite
+set logging on
+set prompt
+echo ------------------------------------------------------------ \n
+echo display list of numbers in reverse \n\n
+
+echo list of the numbers (in reverse):\n\n
+x/5dg &numbers
+
+
+
+echo \n\n
+set logging off
+quit

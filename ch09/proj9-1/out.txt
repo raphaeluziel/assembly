@@ -1,0 +1,10 @@
+------------------------------------------------------------ 
+display list of numbers in reverse 
+
+list of the numbers (in reverse):
+
+0x402000:	125	124
+0x402010:	123	122
+0x402020:	121
+
+
