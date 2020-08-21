@@ -1,0 +1,102 @@
+     1                                 %line 1+1 proj8-6.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 [section .data]
+    10                                 
+    11                                 
+    12                                 
+    13                                 
+    14                                 EXIT_SUCCESS equ 0
+    15                                 SYS_exit equ 60
+    16                                 
+    17                                 
+    18                                 
+    19                                 
+    20 00000000 120000006100000007-    lst dd 18, 97, 7, 2000, 9, 2, 35, 72, 6, 0, 4, 1, 99, 0
+    21 00000000 000000D00700000900-
+    22 00000000 000002000000230000-
+    23 00000000 004800000006000000-
+    24 00000000 000000000400000001-
+    25 00000000 000000630000000000-
+    26 00000000 0000               
+    27 00000038 0E000000               len dd 14
+    28 0000003C 00                     swapped db 0
+    29                                 
+    30                                 
+    31                                 
+    32                                 
+    33                                 [section .text]
+    34                                 [global _start]
+    35                                 _start:
+    36                                 
+    37                                 
+    38                                 
+    39                                 
+    40                                 
+    41                                 
+    42                                 
+    43                                 
+    44                                 
+    45                                 
+    46                                 
+    47                                 
+    48                                 
+    49                                 
+    50                                 
+    51                                 
+    52                                 
+    53                                 
+    54                                 
+    55                                 
+    56 00000000 8B0C25[00000000]        mov ecx, dword[len]
+    57 00000007 8B3C25[00000000]        mov edi, dword[len]
+    58 0000000E FFC9                    dec ecx
+    59 00000010 FFCF                    dec edi
+    60 00000012 BE00000000              mov esi, 0
+    61                                 
+    62                                 outerForLoop:
+    63                                 
+    64 00000017 83FF00                  cmp edi, 0
+    65 0000001A 7E5C                    jle last
+    66 0000001C B300                    mov bl, 0
+    67 0000001E 881C25[00000000]        mov byte[swapped], bl
+    68                                 
+    69                                 innerForLoop:
+    70                                 
+    71 00000025 678B04B5[00000000]      mov eax, dword[lst+esi*4]
+    72 0000002D 673B04B5[04000000]      cmp eax, dword[lst+(esi+1)*4]
+    73 00000035 7E21                    jle notGreater
+    74 00000037 89C3                    mov ebx, eax
+    75 00000039 678B04B5[04000000]      mov eax, dword[lst+(esi+1)*4]
+    76 00000041 678904B5[00000000]      mov dword[lst+esi*4], eax
+    77 00000049 67891CB5[04000000]      mov dword[lst+(esi+1)*4], ebx
+    78 00000051 B301                    mov bl, 1
+    79 00000053 881C25[00000000]        mov byte[swapped], bl
+    80                                 
+    81                                 notGreater:
+    82                                 
+    83 0000005A FFC6                    inc esi
+    84 0000005C E2C5                    loop innerForLoop
+    85                                 
+    86                                 nextPass:
+    87                                 
+    88 0000005E 803C25[00000000]00      cmp byte[swapped], 0
+    89 00000066 7410                    je last
+    90 00000068 FFCF                    dec edi
+    91 0000006A BE00000000              mov esi, 0
+    92 0000006F 8B0C25[00000000]        mov ecx, dword[len]
+    93 00000076 FFC9                    dec ecx
+    94 00000078 EB9B                    jmp outerForLoop
+    95                                 
+    96                                 
+    97                                 
+    98                                 
+    99                                 last:
+   100 0000007A 48C7C03C000000          mov rax, SYS_exit
+   101 00000081 48C7C700000000          mov rdi, EXIT_SUCCESS
+   102 00000088 0F05                    syscall
