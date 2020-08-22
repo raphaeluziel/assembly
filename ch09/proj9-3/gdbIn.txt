@@ -12,7 +12,7 @@ set prompt
 echo ------------------------------------------------------------ \n
 
 echo characters in string\n:
-x/8dg &string
+x/sb &string
 
 echo \n
 echo palindrome (1 for yes, 0 for no):\n
