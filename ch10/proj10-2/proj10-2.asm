@@ -20,7 +20,9 @@ SYS_exit         equ      60            ; caxl code for terminate
 ; -----
 ; Define data
 
-intNum          dd      1498
+intNum          dd      -1498653009
+intSign         dd      1                 ; assume sign is positive
+strSign         db      "+"
 NULL            db      0
 
 ; -----
@@ -41,6 +43,10 @@ _start:
 ; -----
 ; Integer to string representation calculation including negative numbers
 ;
+; BEFORE Part A:
+;   Check if number is negative to set sign and "+" or "-" string
+;   intSign will be used to change the digits if negative to positive
+;   strSign will be used to add the sign char at the end
 ; Part A - successive division
 ;   digitCount = 0
 ;   get integer
@@ -65,12 +71,21 @@ _start:
 ; -----
 ; Part A - successive division
   mov     eax, dword[intNum]          ; get integer
+
+  cmp     eax, 0
+  jg      positive
+  mov     dword[intSign], -1          ; sign is negative
+  mov     byte[strSign], "-"
+
+positive:
+
   mov     rcx, 0                      ; digitCount = 0
   mov     ebx, 10                     ; set for dividing by 10
 
 divideLoop:
-  mov     edx, 0
-  div     ebx                         ; divide number by 10
+  cdq
+  idiv    ebx                         ; divide number by 10
+  imul    edx, dword[intSign]         ; if negative make it positive for push
 
   push    rdx                         ; push remainder onto stack (required quadword)
   inc     rcx                         ; increment digitCount
@@ -84,6 +99,10 @@ divideLoop:
   mov     rbx, strNum                 ; get address of strNum
   mov     rdi, 0                      ; idx = 0
 
+  mov     al, byte[strSign]           ; al holds the "+" or "-" character
+  mov     byte[rbx+rdi], al           ; add sign to beginning of numbr
+  inc     rdi                         ; inc rdi to begin adding digits
+
 popLoop:
   pop     rax                         ; pop intDigit
 
@@ -93,7 +112,8 @@ popLoop:
   inc     rdi                         ; increment idx
   loop    popLoop                     ; rcx has digitCount, loop decrements it
                                       ; if > 0 jump to popLoop
-  mov     byte[rbx+rdi], 0            ; strNum[idx] = NULL
+
+  mov     byte[rbx+rdi+1], 0          ; strNum[idx] = NULL
 
 ; *****************************************************************************
 ; Done, terminate program.
