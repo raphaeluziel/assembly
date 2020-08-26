@@ -10,9 +10,9 @@ set logging overwrite
 set logging on
 set prompt
 echo ------------------------------------------------------------ \n
-echo convert integer to ascii characters \n\n
+echo convert ascii character representation of number to int number \n\n
 
-x/s &strNum
+x/dg &intNum
 
 echo \n\n
 set logging off

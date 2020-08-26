@@ -1,0 +1,92 @@
+     1                                 %line 1+1 proj10-4.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 
+    10                                 
+    11                                 
+    12                                 
+    13                                 
+    14                                 
+    15                                 [section .data]
+    16                                 
+    17                                 
+    18                                 
+    19                                 
+    20                                 EXIT_SUCCESS equ 0
+    21                                 SYS_exit equ 60
+    22                                 
+    23                                 
+    24                                 
+    25                                 
+    26 00000000 2D3138343039343932-    strNum db "-18409492", 0
+    27 00000000 00                 
+    28 0000000A 0000000000000000       intNum dq 0
+    29 00000012 FFFFFFFF               intSign dd -1
+    30 00000016 2D                     strSign db "-"
+    31 00000017 0A00000000000000       ten dq 10
+    32 0000001F 00                     NULL db 0
+    33                                 
+    34                                 
+    35                                 
+    36                                 
+    37                                 [section .text]
+    38                                 [global _start]
+    39                                 _start:
+    40                                 
+    41                                 
+    42                                 
+    43                                 
+    44                                 
+    45 00000000 48C7C600000000          mov rsi, 0
+    46 00000007 48C7C000000000          mov rax, 0
+    47                                 
+    48                                 addCharToStack:
+    49 0000000E 8A86[00000000]          mov al, byte[strNum+rsi]
+    50 00000014 3C00                    cmp al, 0
+    51 00000016 7404                    je startPop
+    52 00000018 50                      push rax
+    53 00000019 48FFC6                  inc rsi
+    54 0000001C E2EE                    loop addCharToStack
+    55                                 
+    56                                 
+    57                                 
+    58                                 
+    59                                 startPop:
+    60 0000001E 48C7C100000000          mov rcx, 0
+    61 00000025 48C7C301000000          mov rbx, 1
+    62                                 
+    63                                 convertToInt:
+    64 0000002C 58                      pop rax
+    65                                 
+    66 0000002D 3C2B                    cmp al, "+"
+    67 0000002F 7433                    je last
+    68 00000031 3C2D                    cmp al, "-"
+    69 00000033 741B                    je negative
+    70                                 
+    71 00000035 2C30                    sub al, "0"
+    72 00000037 48F7E3                  mul rbx
+    73 0000003A 48010425[00000000]      add qword[intNum], rax
+    74                                 
+    75 00000042 4889D8                  mov rax, rbx
+    76 00000045 48F72425[00000000]      mul qword[ten]
+    77 0000004D 4889C3                  mov rbx, rax
+    78 00000050 E2D8                    loop convertToInt
+    79                                 
+    80                                 negative:
+    81 00000052 488B0425[00000000]      mov rax, qword[intNum]
+    82 0000005A 486BC0FF                imul rax, -1
+    83 0000005E 48890425[00000000]      mov qword[intNum], rax
+    84                                 
+    85                                 
+    86                                 
+    87                                 
+    88                                 
+    89                                 last:
+    90 00000066 48C7C03C000000          mov rax, SYS_exit
+    91 0000006D 48C7C700000000          mov rdi, EXIT_SUCCESS
+    92 00000074 0F05                    syscall

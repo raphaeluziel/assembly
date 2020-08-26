@@ -1,0 +1,6 @@
+------------------------------------------------------------ 
+convert ascii character representation of number to int number 
+
+0x40200a:	-18409492
+
+
