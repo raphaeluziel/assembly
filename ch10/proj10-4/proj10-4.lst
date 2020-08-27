@@ -26,67 +26,64 @@
     26 00000000 2D3138343039343932-    strNum db "-18409492", 0
     27 00000000 00                 
     28 0000000A 0000000000000000       intNum dq 0
-    29 00000012 FFFFFFFF               intSign dd -1
-    30 00000016 2D                     strSign db "-"
-    31 00000017 0A00000000000000       ten dq 10
-    32 0000001F 00                     NULL db 0
+    29 00000012 0A00000000000000       ten dq 10
+    30                                 
+    31                                 
+    32                                 
     33                                 
-    34                                 
-    35                                 
-    36                                 
-    37                                 [section .text]
-    38                                 [global _start]
-    39                                 _start:
+    34                                 [section .text]
+    35                                 [global _start]
+    36                                 _start:
+    37                                 
+    38                                 
+    39                                 
     40                                 
     41                                 
-    42                                 
-    43                                 
+    42 00000000 48C7C600000000          mov rsi, 0
+    43 00000007 48C7C000000000          mov rax, 0
     44                                 
-    45 00000000 48C7C600000000          mov rsi, 0
-    46 00000007 48C7C000000000          mov rax, 0
-    47                                 
-    48                                 addCharToStack:
-    49 0000000E 8A86[00000000]          mov al, byte[strNum+rsi]
-    50 00000014 3C00                    cmp al, 0
-    51 00000016 7404                    je startPop
-    52 00000018 50                      push rax
-    53 00000019 48FFC6                  inc rsi
-    54 0000001C E2EE                    loop addCharToStack
+    45                                 addCharToStack:
+    46 0000000E 8A86[00000000]          mov al, byte[strNum+rsi]
+    47 00000014 3C00                    cmp al, 0
+    48 00000016 7404                    je startPop
+    49 00000018 50                      push rax
+    50 00000019 48FFC6                  inc rsi
+    51 0000001C E2EE                    loop addCharToStack
+    52                                 
+    53                                 
+    54                                 
     55                                 
-    56                                 
-    57                                 
-    58                                 
-    59                                 startPop:
-    60 0000001E 48C7C100000000          mov rcx, 0
-    61 00000025 48C7C301000000          mov rbx, 1
+    56                                 startPop:
+    57 0000001E 48C7C100000000          mov rcx, 0
+    58 00000025 48C7C301000000          mov rbx, 1
+    59                                 
+    60                                 convertToInt:
+    61 0000002C 58                      pop rax
     62                                 
-    63                                 convertToInt:
-    64 0000002C 58                      pop rax
-    65                                 
-    66 0000002D 3C2B                    cmp al, "+"
-    67 0000002F 7433                    je last
-    68 00000031 3C2D                    cmp al, "-"
-    69 00000033 741B                    je negative
-    70                                 
-    71 00000035 2C30                    sub al, "0"
-    72 00000037 48F7E3                  mul rbx
-    73 0000003A 48010425[00000000]      add qword[intNum], rax
-    74                                 
-    75 00000042 4889D8                  mov rax, rbx
-    76 00000045 48F72425[00000000]      mul qword[ten]
-    77 0000004D 4889C3                  mov rbx, rax
-    78 00000050 E2D8                    loop convertToInt
-    79                                 
-    80                                 negative:
-    81 00000052 488B0425[00000000]      mov rax, qword[intNum]
-    82 0000005A 486BC0FF                imul rax, -1
-    83 0000005E 48890425[00000000]      mov qword[intNum], rax
+    63 0000002D 3C2B                    cmp al, "+"
+    64 0000002F 7433                    je last
+    65 00000031 3C2D                    cmp al, "-"
+    66 00000033 741B                    je negative
+    67                                 
+    68 00000035 2C30                    sub al, "0"
+    69 00000037 48F7E3                  mul rbx
+    70 0000003A 48010425[00000000]      add qword[intNum], rax
+    71                                 
+    72 00000042 4889D8                  mov rax, rbx
+    73 00000045 48F72425[00000000]      mul qword[ten]
+    74 0000004D 4889C3                  mov rbx, rax
+    75 00000050 E2D8                    loop convertToInt
+    76                                 
+    77                                 negative:
+    78 00000052 488B0425[00000000]      mov rax, qword[intNum]
+    79 0000005A 486BC0FF                imul rax, -1
+    80 0000005E 48890425[00000000]      mov qword[intNum], rax
+    81                                 
+    82                                 
+    83                                 
     84                                 
     85                                 
-    86                                 
-    87                                 
-    88                                 
-    89                                 last:
-    90 00000066 48C7C03C000000          mov rax, SYS_exit
-    91 0000006D 48C7C700000000          mov rdi, EXIT_SUCCESS
-    92 00000074 0F05                    syscall
+    86                                 last:
+    87 00000066 48C7C03C000000          mov rax, SYS_exit
+    88 0000006D 48C7C700000000          mov rdi, EXIT_SUCCESS
+    89 00000074 0F05                    syscall
