@@ -2,7 +2,7 @@
 convert ascii character representation of number to int number 
 
 Message:
-0x402044:	"ERROR - String not formatted correctly"
-0x40200c:	0
+0x402044:	""
+0x40200c:	4928476022
 
 

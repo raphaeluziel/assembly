@@ -27,8 +27,8 @@
     27                                 
     28                                 
     29                                 
-    30 00000000 2B3439323834373630-    strNum db "+4928476022", 9
-    31 00000000 323209             
+    30 00000000 2D3439323834373630-    strNum db "-4928476022", 0
+    31 00000000 323200             
     32 0000000C 0000000000000000       intNum dq 0
     33 00000014 0A00000000000000       ten dq 10
     34 0000001C 4552524F52202D2053-    errorMess db "ERROR - String not formatted correctly", 0
@@ -73,7 +73,7 @@
     73 00000024 8A86[00000000]          mov al, byte[errorMess+rsi]
     74 0000002A 8886[00000000]          mov byte[strError+rsi], al
     75 00000030 3C00                    cmp al, 0
-    76 00000032 746B                    je last
+    76 00000032 7473                    je last
     77 00000034 48FFC6                  inc rsi
     78 00000037 E2E9                    loop errorMessLoop
     79                                 
@@ -95,44 +95,47 @@
     95 00000050 48FFC6                  inc rsi
     96 00000053 E2E6                    loop addCharToStack
     97                                 
-    98 00000055 EBC4                    jmp initializeError
+    98                                 
     99                                 
-   100                                 
+   100 00000055 EBC4                    jmp initializeError
    101                                 
    102                                 
    103                                 
-   104                                 startPop:
-   105 00000057 48C7C100000000          mov rcx, 0
-   106 0000005E 48C7C301000000          mov rbx, 1
-   107                                 
-   108                                 convertToInt:
-   109 00000065 58                      pop rax
-   110                                 
-   111 00000066 3C2B                    cmp al, "+"
-   112 00000068 7435                    je last
-   113 0000006A 3C2D                    cmp al, "-"
-   114 0000006C 741B                    je negative
-   115                                 
-   116 0000006E 2C30                    sub al, "0"
-   117 00000070 48F7E3                  mul rbx
-   118 00000073 48010425[00000000]      add qword[intNum], rax
-   119                                 
-   120 0000007B 4889D8                  mov rax, rbx
-   121 0000007E 48F72425[00000000]      mul qword[ten]
-   122 00000086 4889C3                  mov rbx, rax
-   123 00000089 E2D8                    loop convertToInt
-   124                                 
-   125                                 negative:
-   126 0000008B 488B0425[00000000]      mov rax, qword[intNum]
-   127 00000093 486BC0FF                imul rax, -1
-   128 00000097 48890425[00000000]      mov qword[intNum], rax
-   129 0000009F EBFE                    jmp last
-   130                                 
-   131                                 
-   132                                 
+   104                                 
+   105                                 
+   106                                 startPop:
+   107 00000057 48C7C100000000          mov rcx, 0
+   108 0000005E 48C7C301000000          mov rbx, 1
+   109                                 
+   110                                 convertToInt:
+   111 00000065 58                      pop rax
+   112                                 
+   113 00000066 3C2B                    cmp al, "+"
+   114 00000068 743D                    je last
+   115 0000006A 3C2D                    cmp al, "-"
+   116 0000006C 741B                    je negative
+   117                                 
+   118 0000006E 2C30                    sub al, "0"
+   119 00000070 48F7E3                  mul rbx
+   120 00000073 48010425[00000000]      add qword[intNum], rax
+   121                                 
+   122 0000007B 4889D8                  mov rax, rbx
+   123 0000007E 48F72425[00000000]      mul qword[ten]
+   124 00000086 4889C3                  mov rbx, rax
+   125 00000089 E2D8                    loop convertToInt
+   126                                 
+   127                                 negative:
+   128 0000008B 488B0425[00000000]      mov rax, qword[intNum]
+   129 00000093 486BC0FF                imul rax, -1
+   130 00000097 48890425[00000000]      mov qword[intNum], rax
+   131 0000009F 48F71C25[00000000]      neg qword[intNum]
+   132 000000A7 EBFE                    jmp last
    133                                 
    134                                 
-   135                                 last:
-   136 000000A1 48C7C03C000000          mov rax, SYS_exit
-   137 000000A8 48C7C700000000          mov rdi, EXIT_SUCCESS
-   138 000000AF 0F05                    syscall
+   135                                 
+   136                                 
+   137                                 
+   138                                 last:
+   139 000000A9 48C7C03C000000          mov rax, SYS_exit
+   140 000000B0 48C7C700000000          mov rdi, EXIT_SUCCESS
+   141 000000B7 0F05                    syscall

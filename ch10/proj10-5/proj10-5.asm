@@ -26,7 +26,7 @@ SYS_exit         equ      60            ; call code for terminate
 ; -----
 ; Define data
 
-strNum          db      "+4928476022", 0  ; null terminated string
+strNum          db      "-4928476022", 0  ; null terminated string
 intNum          dq      0                 ; int is the actual number
 ten             dq      10                ; the multiplier
 errorMess       db      "ERROR - String not formatted correctly", 0
@@ -122,6 +122,7 @@ negative:
   mov     rax, qword[intNum]
   imul    rax, -1
   mov     qword[intNum], rax
+  ; neg     qword[intNum]         ; this would also be equivalent to the above
   jmp     last
 
 

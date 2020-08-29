@@ -1,0 +1,91 @@
+     1                                 %line 1+1 proj11-1.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 
+    10                                 
+    11                                 %line 27+1 proj11-1.asm
+    12                                 
+    13                                 
+    14                                 
+    15                                 
+    16                                 [section .data]
+    17                                 
+    18                                 
+    19                                 
+    20                                 
+    21                                 EXIT_SUCCESS equ 0
+    22                                 SYS_exit equ 60
+    23                                 
+    24                                 
+    25                                 
+    26                                 
+    27 00000000 040000000500000002-    list1 dd 4, 5, 2, -3, 1
+    28 00000000 000000FDFFFFFF0100-
+    29 00000000 0000               
+    30 00000014 05000000               len1 dd 5
+    31 00000018 00000000               ave1 dd 0
+    32                                 
+    33 0000001C 020000000600000003-    list2 dd 2, 6, 3, -2, 1, 8, 19
+    34 0000001C 000000FEFFFFFF0100-
+    35 0000001C 000008000000130000-
+    36 0000001C 00                 
+    37 00000038 07000000               len2 dd 7
+    38 0000003C 00000000               ave2 dd 0
+    39                                 
+    40                                 
+    41                                 
+    42                                 
+    43                                 [section .text]
+    44                                 [global _start]
+    45                                 _start:
+    46                                 
+    47                                 
+    48                                 
+    49                                 
+    50                                 
+    51                                 %line 60+0 proj11-1.asm
+    52 00000000 B800000000              mov eax, 0
+    53 00000005 8B0C25[00000000]        mov ecx, dword[len1]
+    54 0000000C 49C7C400000000          mov r12, 0
+    55 00000013 488D1C25[00000000]      lea rbx, [list1]
+    56                                 
+    57                                 ..@3.sumLoop:
+    58 0000001B 420304A3                add eax, dword[rbx+r12*4]
+    59 0000001F 49FFC4                  inc r12
+    60 00000022 E2F5                    loop ..@3.sumLoop
+    61                                 
+    62 00000024 99                      cdq
+    63 00000025 F73C25[00000000]        idiv dword[len1]
+    64 0000002C 890425[00000000]        mov dword[ave1], eax
+    65                                 
+    66                                 %line 61+1 proj11-1.asm
+    67                                 
+    68                                 %line 61+0 proj11-1.asm
+    69 00000033 B800000000              mov eax, 0
+    70 00000038 8B0C25[00000000]        mov ecx, dword[len2]
+    71 0000003F 49C7C400000000          mov r12, 0
+    72 00000046 488D1C25[00000000]      lea rbx, [list2]
+    73                                 
+    74                                 ..@4.sumLoop:
+    75 0000004E 420304A3                add eax, dword[rbx+r12*4]
+    76 00000052 49FFC4                  inc r12
+    77 00000055 E2F5                    loop ..@4.sumLoop
+    78                                 
+    79 00000057 99                      cdq
+    80 00000058 F73C25[00000000]        idiv dword[len2]
+    81 0000005F 890425[00000000]        mov dword[ave2], eax
+    82                                 
+    83                                 %line 62+1 proj11-1.asm
+    84                                 
+    85                                 
+    86                                 
+    87                                 
+    88                                 last:
+    89 00000066 48C7C03C000000          mov rax, SYS_exit
+    90 0000006D 48C7C700000000          mov rdi, EXIT_SUCCESS
+    91 00000074 0F05                    syscall

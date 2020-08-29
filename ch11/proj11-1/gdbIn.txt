@@ -1,0 +1,20 @@
+# ----------------------------------------------------
+#   Debugger Input Script
+# ----------------------------------------------------
+echo \n\n
+break last
+run
+set pagination off
+set logging file out.txt
+set logging overwrite
+set logging on
+set prompt
+echo ------------------------------------------------------------ \n
+echo Averages of the two lists \n\n
+
+x/dw &ave1
+x/dw &ave2
+
+echo \n\n
+set logging off
+quit
