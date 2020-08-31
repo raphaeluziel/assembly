@@ -1,0 +1,14 @@
+------------------------------------------------------------ 
+Stats of the two lists 
+
+List 1
+Average:0x402018:	1
+Minimum:0x40201c:	-3
+Maximum:0x402020:	5
+
+List 2
+Average:0x40204c:	953
+Minimum:0x402050:	-456
+Maximum:0x402054:	9000
+
+

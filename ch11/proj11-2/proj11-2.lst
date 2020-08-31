@@ -1,0 +1,177 @@
+     1                                 %line 1+1 proj11-2.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 
+    10                                 
+    11                                 
+    12                                 %line 28+1 proj11-2.asm
+    13                                 
+    14                                 
+    15                                 
+    16                                 
+    17                                 
+    18                                 %line 50+1 proj11-2.asm
+    19                                 
+    20                                 
+    21                                 
+    22                                 
+    23                                 
+    24                                 %line 72+1 proj11-2.asm
+    25                                 
+    26                                 
+    27                                 
+    28                                 
+    29                                 [section .data]
+    30                                 
+    31                                 
+    32                                 
+    33                                 
+    34                                 EXIT_SUCCESS equ 0
+    35                                 SYS_exit equ 60
+    36                                 
+    37                                 
+    38                                 
+    39                                 
+    40 00000000 040000000500000002-    list1 dd 4, 5, 2, -3, 1
+    41 00000000 000000FDFFFFFF0100-
+    42 00000000 0000               
+    43 00000014 05000000               len1 dd 5
+    44 00000018 00000000               ave1 dd 0
+    45 0000001C 00000000               min1 dd 0
+    46 00000020 00000000               max1 dd 0
+    47                                 
+    48 00000024 020000000600000003-    list2 dd 2, 6, 3, -2, 1, 8, 19, -456, 9000
+    49 00000024 000000FEFFFFFF0100-
+    50 00000024 000008000000130000-
+    51 00000024 0038FEFFFF28230000 
+    52 00000048 09000000               len2 dd 9
+    53 0000004C 00000000               ave2 dd 0
+    54 00000050 00000000               min2 dd 0
+    55 00000054 00000000               max2 dd 0
+    56                                 
+    57                                 
+    58                                 
+    59                                 
+    60                                 [section .text]
+    61                                 [global _start]
+    62                                 _start:
+    63                                 
+    64                                 
+    65                                 
+    66                                 
+    67                                 
+    68                                 %line 109+0 proj11-2.asm
+    69 00000000 B800000000              mov eax, 0
+    70 00000005 8B0C25[00000000]        mov ecx, dword[len1]
+    71 0000000C 49C7C400000000          mov r12, 0
+    72 00000013 488D1C25[00000000]      lea rbx, [list1]
+    73                                 
+    74                                 ..@3.sumLoop:
+    75 0000001B 420304A3                add eax, dword[rbx+r12*4]
+    76 0000001F 49FFC4                  inc r12
+    77 00000022 E2F5                    loop ..@3.sumLoop
+    78                                 
+    79 00000024 99                      cdq
+    80 00000025 F73C25[00000000]        idiv dword[len1]
+    81 0000002C 890425[00000000]        mov dword[ave1], eax
+    82                                 
+    83                                 %line 110+1 proj11-2.asm
+    84                                 
+    85                                 %line 110+0 proj11-2.asm
+    86 00000033 8B0C25[00000000]        mov ecx, dword[len1]
+    87 0000003A 49C7C400000000          mov r12, 0
+    88 00000041 488D1C25[00000000]      lea rbx, [list1]
+    89                                 
+    90                                 ..@4.minLoop:
+    91 00000049 428B04A3                mov eax, dword[rbx+r12*4]
+    92 0000004D 3B0425[00000000]        cmp eax, dword[min1]
+    93 00000054 7D05                    jge ..@4.notNewMin
+    94 00000056 890425[00000000]        mov dword[min1], eax
+    95                                 
+    96                                 ..@4.notNewMin:
+    97 0000005D 49FFC4                  inc r12
+    98 00000060 E2E5                    loop ..@4.minLoop
+    99                                 
+   100                                 %line 111+1 proj11-2.asm
+   101                                 
+   102                                 %line 111+0 proj11-2.asm
+   103 00000062 8B0C25[00000000]        mov ecx, dword[len1]
+   104 00000069 49C7C400000000          mov r12, 0
+   105 00000070 488D1C25[00000000]      lea rbx, [list1]
+   106                                 
+   107                                 ..@5.maxLoop:
+   108 00000078 428B04A3                mov eax, dword[rbx+r12*4]
+   109 0000007C 3B0425[00000000]        cmp eax, dword[max1]
+   110 00000083 7E05                    jle ..@5.notNewMax
+   111 00000085 890425[00000000]        mov dword[max1], eax
+   112                                 
+   113                                 ..@5.notNewMax:
+   114 0000008C 49FFC4                  inc r12
+   115 0000008F E2E5                    loop ..@5.maxLoop
+   116                                 
+   117                                 %line 112+1 proj11-2.asm
+   118                                 
+   119                                 
+   120                                 %line 113+0 proj11-2.asm
+   121 00000091 B800000000              mov eax, 0
+   122 00000096 8B0C25[00000000]        mov ecx, dword[len2]
+   123 0000009D 49C7C400000000          mov r12, 0
+   124 000000A4 488D1C25[00000000]      lea rbx, [list2]
+   125                                 
+   126                                 ..@6.sumLoop:
+   127 000000AC 420304A3                add eax, dword[rbx+r12*4]
+   128 000000B0 49FFC4                  inc r12
+   129 000000B3 E2F5                    loop ..@6.sumLoop
+   130                                 
+   131 000000B5 99                      cdq
+   132 000000B6 F73C25[00000000]        idiv dword[len2]
+   133 000000BD 890425[00000000]        mov dword[ave2], eax
+   134                                 
+   135                                 %line 114+1 proj11-2.asm
+   136                                 
+   137                                 %line 114+0 proj11-2.asm
+   138 000000C4 8B0C25[00000000]        mov ecx, dword[len2]
+   139 000000CB 49C7C400000000          mov r12, 0
+   140 000000D2 488D1C25[00000000]      lea rbx, [list2]
+   141                                 
+   142                                 ..@7.minLoop:
+   143 000000DA 428B04A3                mov eax, dword[rbx+r12*4]
+   144 000000DE 3B0425[00000000]        cmp eax, dword[min2]
+   145 000000E5 7D05                    jge ..@7.notNewMin
+   146 000000E7 890425[00000000]        mov dword[min2], eax
+   147                                 
+   148                                 ..@7.notNewMin:
+   149 000000EE 49FFC4                  inc r12
+   150 000000F1 E2E5                    loop ..@7.minLoop
+   151                                 
+   152                                 %line 115+1 proj11-2.asm
+   153                                 
+   154                                 %line 115+0 proj11-2.asm
+   155 000000F3 8B0C25[00000000]        mov ecx, dword[len2]
+   156 000000FA 49C7C400000000          mov r12, 0
+   157 00000101 488D1C25[00000000]      lea rbx, [list2]
+   158                                 
+   159                                 ..@8.maxLoop:
+   160 00000109 428B04A3                mov eax, dword[rbx+r12*4]
+   161 0000010D 3B0425[00000000]        cmp eax, dword[max2]
+   162 00000114 7E05                    jle ..@8.notNewMax
+   163 00000116 890425[00000000]        mov dword[max2], eax
+   164                                 
+   165                                 ..@8.notNewMax:
+   166 0000011D 49FFC4                  inc r12
+   167 00000120 E2E5                    loop ..@8.maxLoop
+   168                                 
+   169                                 %line 116+1 proj11-2.asm
+   170                                 
+   171                                 
+   172                                 
+   173                                 
+   174                                 last:
+   175 00000122 48C7C03C000000          mov rax, SYS_exit
+   176 00000129 48C7C700000000          mov rdi, EXIT_SUCCESS
+   177 00000130 0F05                    syscall

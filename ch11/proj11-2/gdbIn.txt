@@ -1,0 +1,33 @@
+# ----------------------------------------------------
+#   Debugger Input Script
+# ----------------------------------------------------
+echo \n\n
+break last
+run
+set pagination off
+set logging file out.txt
+set logging overwrite
+set logging on
+set prompt
+echo ------------------------------------------------------------ \n
+echo Stats of the two lists \n\n
+
+echo List 1\n
+echo Average:
+x/dw &ave1
+echo Minimum:
+x/dw &min1
+echo Maximum:
+x/dw &max1
+
+echo \nList 2\n
+echo Average:
+x/dw &ave2
+echo Minimum:
+x/dw &min2
+echo Maximum:
+x/dw &max2
+
+echo \n\n
+set logging off
+quit
