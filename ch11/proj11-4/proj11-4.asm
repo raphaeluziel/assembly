@@ -1,10 +1,80 @@
 ; This program takes in an integer, say, -1493, and converts each of the
 ; digits to it's ASCII equivalent for printing.  This program is like proj10-1
 ; EXCEPT (1) I am using the author's version, and (2) it needs to handle signed
-; numbers, including the '+' or '-' in the answer
+; numbers, including the '+' or '-' in the answer, and (3) it is being updated
+; by using a MACRO to handle the work
 
 ; Raphael Uziel
-; August 24, 2020
+; August 31, 2020
+
+; *****************************************************************************
+; MACRO aver to convert int to string
+;   Arguments:
+;     1. integer number
+;     2. string representation
+
+%macro   toChar     2
+
+; -----
+; Part A - successive division
+  mov     eax, dword[%1]              ; get integer
+
+  cmp     eax, 0
+  jg      %%positive
+  cmp     eax, 0
+  je      %%zero
+  mov     dword[intSign], -1          ; sign is negative
+  mov     byte[strSign], "-"
+  jmp     %%initialize
+
+%%positive:
+  mov     dword[intSign], 1
+  mov     byte[strSign], "+"
+
+%%initialize:
+  mov     rcx, 0                      ; digitCount = 0
+  mov     ebx, 10                     ; set for dividing by 10
+
+%%divideLoop:
+  cdq
+  idiv    ebx                         ; divide number by 10
+  imul    edx, dword[intSign]         ; if negative make it positive for push
+
+  push    rdx                         ; push remainder onto stack (required quadword)
+  inc     rcx                         ; increment digitCount
+
+  cmp     eax, 0                      ; if (result > 0)
+  jne     %%divideLoop                  ; jump to divideLoop
+
+; -----
+; Part B - convert remainders and store
+
+  mov     rbx, %2                     ; get address of strNum
+  mov     rdi, 0                      ; idx = 0
+
+  mov     al, byte[strSign]           ; al holds the "+" or "-" character
+  mov     byte[rbx+rdi], al           ; add sign to beginning of numbr
+  inc     rdi                         ; inc rdi to begin adding digits
+
+%%popLoop:
+  pop     rax                         ; pop intDigit
+
+  add     al, "0"                     ; char = int + "0"
+
+  mov     byte[rbx+rdi], al           ; strNum[idx] = char
+  inc     rdi                         ; increment idx
+  loop    %%popLoop                     ; rcx has digitCount, loop decrements it
+                                      ; if > 0 jump to popLoop
+
+  mov     byte[rbx+rdi+1], 0          ; strNum[idx] = NULL
+  jmp     %%endMacro
+
+%%zero:
+  mov     byte[%2], "0"
+
+%%endMacro:
+
+%endmacro
 
 ; *****************************************************************************
 ; Some basic data declarations
@@ -20,7 +90,12 @@ SYS_exit         equ      60            ; caxl code for terminate
 ; -----
 ; Define data
 
-intNum          dd      -1498653009
+intNum1         dd      -1498653009
+intNum2         dd      +1498
+intNum3         dd      -259
+intNum4         dd      -6
+intNum5         dd      0
+
 intSign         dd      1                 ; assume sign is positive
 strSign         db      "+"
 NULL            db      0
@@ -31,7 +106,12 @@ NULL            db      0
 
 section         .bss
 
-strNum          resb    100
+strNum1         resb    100
+strNum2         resb    100
+strNum3         resb    100
+strNum4         resb    100
+strNum5         resb    100
+
 
 ; *****************************************************************************
 ; Code Section
@@ -40,80 +120,11 @@ section          .text
 global _start
 _start:
 
-; -----
-; Integer to string representation calculation including negative numbers
-;
-; BEFORE Part A:
-;   Check if number is negative to set sign and "+" or "-" string
-;   intSign will be used to change the digits if negative to positive
-;   strSign will be used to add the sign char at the end
-; Part A - successive division
-;   digitCount = 0
-;   get integer
-; divideLoop
-;   divide number by 10
-;   push remainder onto stack
-;   increment digitCount
-;   if (result > 0) jump to divideLoop
-;
-; Part B - Convert remainders and store
-;   get starting address of string (array of bytes)
-;   idx = 0
-; popLoop:
-;   pop intDigit
-;   charDigit = intDigit + "0" (0x30 = 48)
-;   string[idx] = charDigit
-;   increment idx
-;   decrement digitCount
-;   if (digitCount > 0) jump to popLopp
-;   string[idx] = NULL
-
-; -----
-; Part A - successive division
-  mov     eax, dword[intNum]          ; get integer
-
-  cmp     eax, 0
-  jg      positive
-  mov     dword[intSign], -1          ; sign is negative
-  mov     byte[strSign], "-"
-
-positive:
-
-  mov     rcx, 0                      ; digitCount = 0
-  mov     ebx, 10                     ; set for dividing by 10
-
-divideLoop:
-  cdq
-  idiv    ebx                         ; divide number by 10
-  imul    edx, dword[intSign]         ; if negative make it positive for push
-
-  push    rdx                         ; push remainder onto stack (required quadword)
-  inc     rcx                         ; increment digitCount
-
-  cmp     eax, 0                      ; if (result > 0)
-  jne     divideLoop                  ; jump to divideLoop
-
-; -----
-; Part B - convert remainders and store
-
-  mov     rbx, strNum                 ; get address of strNum
-  mov     rdi, 0                      ; idx = 0
-
-  mov     al, byte[strSign]           ; al holds the "+" or "-" character
-  mov     byte[rbx+rdi], al           ; add sign to beginning of numbr
-  inc     rdi                         ; inc rdi to begin adding digits
-
-popLoop:
-  pop     rax                         ; pop intDigit
-
-  add     al, "0"                     ; char = int + "0"
-
-  mov     byte[rbx+rdi], al           ; strNum[idx] = char
-  inc     rdi                         ; increment idx
-  loop    popLoop                     ; rcx has digitCount, loop decrements it
-                                      ; if > 0 jump to popLoop
-
-  mov     byte[rbx+rdi+1], 0          ; strNum[idx] = NULL
+  toChar        intNum1, strNum1
+  toChar        intNum2, strNum2
+  toChar        intNum3, strNum3
+  toChar        intNum4, strNum4
+  toChar        intNum5, strNum5
 
 ; *****************************************************************************
 ; Done, terminate program.

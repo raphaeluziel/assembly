@@ -12,7 +12,11 @@ set prompt
 echo ------------------------------------------------------------ \n
 echo convert integer to ascii characters \n\n
 
-x/s &strNum
+x/s &strNum1
+x/s &strNum2
+x/s &strNum3
+x/s &strNum4
+x/s &strNum5
 
 echo \n\n
 set logging off

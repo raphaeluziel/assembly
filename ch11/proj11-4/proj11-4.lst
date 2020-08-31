@@ -1,0 +1,390 @@
+     1                                 %line 1+1 proj11-4.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 
+    10                                 
+    11                                 
+    12                                 
+    13                                 
+    14                                 
+    15                                 
+    16                                 
+    17                                 %line 78+1 proj11-4.asm
+    18                                 
+    19                                 
+    20                                 
+    21                                 
+    22                                 [section .data]
+    23                                 
+    24                                 
+    25                                 
+    26                                 
+    27                                 EXIT_SUCCESS equ 0
+    28                                 SYS_exit equ 60
+    29                                 
+    30                                 
+    31                                 
+    32                                 
+    33 00000000 AF5EACA6               intNum1 dd -1498653009
+    34 00000004 DA050000               intNum2 dd +1498
+    35 00000008 FDFEFFFF               intNum3 dd -259
+    36 0000000C FAFFFFFF               intNum4 dd -6
+    37 00000010 00000000               intNum5 dd 0
+    38                                 
+    39 00000014 01000000               intSign dd 1
+    40 00000018 2B                     strSign db "+"
+    41 00000019 00                     NULL db 0
+    42                                 
+    43                                 
+    44                                 
+    45                                 
+    46                                 
+    47                                 [section .bss]
+    48                                 
+    49 00000000 <gap>                  strNum1 resb 100
+    50 00000064 <gap>                  strNum2 resb 100
+    51 000000C8 <gap>                  strNum3 resb 100
+    52 0000012C <gap>                  strNum4 resb 100
+    53 00000190 <gap>                  strNum5 resb 100
+    54                                 
+    55                                 
+    56                                 
+    57                                 
+    58                                 
+    59                                 [section .text]
+    60                                 [global _start]
+    61                                 _start:
+    62                                 
+    63                                 
+    64                                 %line 123+0 proj11-4.asm
+    65                                 
+    66                                 
+    67 00000000 8B0425[00000000]        mov eax, dword[intNum1]
+    68                                 
+    69 00000007 83F800                  cmp eax, 0
+    70 0000000A 7F18                    jg ..@4.positive
+    71 0000000C 83F800                  cmp eax, 0
+    72 0000000F 7473                    je ..@4.zero
+    73 00000011 C70425[00000000]FF-     mov dword[intSign], -1
+    74 00000011 FFFFFF             
+    75 0000001C C60425[00000000]2D      mov byte[strSign], "-"
+    76 00000024 EB11                    jmp ..@4.initialize
+    77                                 
+    78                                 ..@4.positive:
+    79 00000026 C70425[00000000]01-     mov dword[intSign], 1
+    80 00000026 000000             
+    81 00000031 C60425[00000000]2B      mov byte[strSign], "+"
+    82                                 
+    83                                 ..@4.initialize:
+    84 00000039 48C7C100000000          mov rcx, 0
+    85 00000040 BB0A000000              mov ebx, 10
+    86                                 
+    87                                 ..@4.divideLoop:
+    88 00000045 99                      cdq
+    89 00000046 F7FB                    idiv ebx
+    90 00000048 0FAF1425[00000000]      imul edx, dword[intSign]
+    91                                 
+    92 00000050 52                      push rdx
+    93 00000051 48FFC1                  inc rcx
+    94                                 
+    95 00000054 83F800                  cmp eax, 0
+    96 00000057 75EA                    jne ..@4.divideLoop
+    97                                 
+    98                                 
+    99                                 
+   100                                 
+   101 00000059 48C7C3[00000000]        mov rbx, strNum1
+   102 00000060 48C7C700000000          mov rdi, 0
+   103                                 
+   104 00000067 8A0425[00000000]        mov al, byte[strSign]
+   105 0000006E 88043B                  mov byte[rbx+rdi], al
+   106 00000071 48FFC7                  inc rdi
+   107                                 
+   108                                 ..@4.popLoop:
+   109 00000074 58                      pop rax
+   110                                 
+   111 00000075 0430                    add al, "0"
+   112                                 
+   113 00000077 88043B                  mov byte[rbx+rdi], al
+   114 0000007A 48FFC7                  inc rdi
+   115 0000007D E2F3                    loop ..@4.popLoop
+   116                                 
+   117                                 
+   118 0000007F C6443B0100              mov byte[rbx+rdi+1], 0
+   119 00000084 EB06                    jmp ..@4.endMacro
+   120                                 
+   121                                 ..@4.zero:
+   122 00000086 C60425[00000000]30      mov byte[strNum1], "0"
+   123                                 
+   124                                 ..@4.endMacro:
+   125                                 
+   126                                 %line 124+1 proj11-4.asm
+   127                                 
+   128                                 %line 124+0 proj11-4.asm
+   129                                 
+   130                                 
+   131 0000008E 8B0425[00000000]        mov eax, dword[intNum2]
+   132                                 
+   133 00000095 83F800                  cmp eax, 0
+   134 00000098 7F18                    jg ..@5.positive
+   135 0000009A 83F800                  cmp eax, 0
+   136 0000009D 7473                    je ..@5.zero
+   137 0000009F C70425[00000000]FF-     mov dword[intSign], -1
+   138 0000009F FFFFFF             
+   139 000000AA C60425[00000000]2D      mov byte[strSign], "-"
+   140 000000B2 EB11                    jmp ..@5.initialize
+   141                                 
+   142                                 ..@5.positive:
+   143 000000B4 C70425[00000000]01-     mov dword[intSign], 1
+   144 000000B4 000000             
+   145 000000BF C60425[00000000]2B      mov byte[strSign], "+"
+   146                                 
+   147                                 ..@5.initialize:
+   148 000000C7 48C7C100000000          mov rcx, 0
+   149 000000CE BB0A000000              mov ebx, 10
+   150                                 
+   151                                 ..@5.divideLoop:
+   152 000000D3 99                      cdq
+   153 000000D4 F7FB                    idiv ebx
+   154 000000D6 0FAF1425[00000000]      imul edx, dword[intSign]
+   155                                 
+   156 000000DE 52                      push rdx
+   157 000000DF 48FFC1                  inc rcx
+   158                                 
+   159 000000E2 83F800                  cmp eax, 0
+   160 000000E5 75EA                    jne ..@5.divideLoop
+   161                                 
+   162                                 
+   163                                 
+   164                                 
+   165 000000E7 48C7C3[00000000]        mov rbx, strNum2
+   166 000000EE 48C7C700000000          mov rdi, 0
+   167                                 
+   168 000000F5 8A0425[00000000]        mov al, byte[strSign]
+   169 000000FC 88043B                  mov byte[rbx+rdi], al
+   170 000000FF 48FFC7                  inc rdi
+   171                                 
+   172                                 ..@5.popLoop:
+   173 00000102 58                      pop rax
+   174                                 
+   175 00000103 0430                    add al, "0"
+   176                                 
+   177 00000105 88043B                  mov byte[rbx+rdi], al
+   178 00000108 48FFC7                  inc rdi
+   179 0000010B E2F3                    loop ..@5.popLoop
+   180                                 
+   181                                 
+   182 0000010D C6443B0100              mov byte[rbx+rdi+1], 0
+   183 00000112 EB06                    jmp ..@5.endMacro
+   184                                 
+   185                                 ..@5.zero:
+   186 00000114 C60425[00000000]30      mov byte[strNum2], "0"
+   187                                 
+   188                                 ..@5.endMacro:
+   189                                 
+   190                                 %line 125+1 proj11-4.asm
+   191                                 
+   192                                 %line 125+0 proj11-4.asm
+   193                                 
+   194                                 
+   195 0000011C 8B0425[00000000]        mov eax, dword[intNum3]
+   196                                 
+   197 00000123 83F800                  cmp eax, 0
+   198 00000126 7F18                    jg ..@6.positive
+   199 00000128 83F800                  cmp eax, 0
+   200 0000012B 7473                    je ..@6.zero
+   201 0000012D C70425[00000000]FF-     mov dword[intSign], -1
+   202 0000012D FFFFFF             
+   203 00000138 C60425[00000000]2D      mov byte[strSign], "-"
+   204 00000140 EB11                    jmp ..@6.initialize
+   205                                 
+   206                                 ..@6.positive:
+   207 00000142 C70425[00000000]01-     mov dword[intSign], 1
+   208 00000142 000000             
+   209 0000014D C60425[00000000]2B      mov byte[strSign], "+"
+   210                                 
+   211                                 ..@6.initialize:
+   212 00000155 48C7C100000000          mov rcx, 0
+   213 0000015C BB0A000000              mov ebx, 10
+   214                                 
+   215                                 ..@6.divideLoop:
+   216 00000161 99                      cdq
+   217 00000162 F7FB                    idiv ebx
+   218 00000164 0FAF1425[00000000]      imul edx, dword[intSign]
+   219                                 
+   220 0000016C 52                      push rdx
+   221 0000016D 48FFC1                  inc rcx
+   222                                 
+   223 00000170 83F800                  cmp eax, 0
+   224 00000173 75EA                    jne ..@6.divideLoop
+   225                                 
+   226                                 
+   227                                 
+   228                                 
+   229 00000175 48C7C3[00000000]        mov rbx, strNum3
+   230 0000017C 48C7C700000000          mov rdi, 0
+   231                                 
+   232 00000183 8A0425[00000000]        mov al, byte[strSign]
+   233 0000018A 88043B                  mov byte[rbx+rdi], al
+   234 0000018D 48FFC7                  inc rdi
+   235                                 
+   236                                 ..@6.popLoop:
+   237 00000190 58                      pop rax
+   238                                 
+   239 00000191 0430                    add al, "0"
+   240                                 
+   241 00000193 88043B                  mov byte[rbx+rdi], al
+   242 00000196 48FFC7                  inc rdi
+   243 00000199 E2F3                    loop ..@6.popLoop
+   244                                 
+   245                                 
+   246 0000019B C6443B0100              mov byte[rbx+rdi+1], 0
+   247 000001A0 EB06                    jmp ..@6.endMacro
+   248                                 
+   249                                 ..@6.zero:
+   250 000001A2 C60425[00000000]30      mov byte[strNum3], "0"
+   251                                 
+   252                                 ..@6.endMacro:
+   253                                 
+   254                                 %line 126+1 proj11-4.asm
+   255                                 
+   256                                 %line 126+0 proj11-4.asm
+   257                                 
+   258                                 
+   259 000001AA 8B0425[00000000]        mov eax, dword[intNum4]
+   260                                 
+   261 000001B1 83F800                  cmp eax, 0
+   262 000001B4 7F18                    jg ..@7.positive
+   263 000001B6 83F800                  cmp eax, 0
+   264 000001B9 7473                    je ..@7.zero
+   265 000001BB C70425[00000000]FF-     mov dword[intSign], -1
+   266 000001BB FFFFFF             
+   267 000001C6 C60425[00000000]2D      mov byte[strSign], "-"
+   268 000001CE EB11                    jmp ..@7.initialize
+   269                                 
+   270                                 ..@7.positive:
+   271 000001D0 C70425[00000000]01-     mov dword[intSign], 1
+   272 000001D0 000000             
+   273 000001DB C60425[00000000]2B      mov byte[strSign], "+"
+   274                                 
+   275                                 ..@7.initialize:
+   276 000001E3 48C7C100000000          mov rcx, 0
+   277 000001EA BB0A000000              mov ebx, 10
+   278                                 
+   279                                 ..@7.divideLoop:
+   280 000001EF 99                      cdq
+   281 000001F0 F7FB                    idiv ebx
+   282 000001F2 0FAF1425[00000000]      imul edx, dword[intSign]
+   283                                 
+   284 000001FA 52                      push rdx
+   285 000001FB 48FFC1                  inc rcx
+   286                                 
+   287 000001FE 83F800                  cmp eax, 0
+   288 00000201 75EA                    jne ..@7.divideLoop
+   289                                 
+   290                                 
+   291                                 
+   292                                 
+   293 00000203 48C7C3[00000000]        mov rbx, strNum4
+   294 0000020A 48C7C700000000          mov rdi, 0
+   295                                 
+   296 00000211 8A0425[00000000]        mov al, byte[strSign]
+   297 00000218 88043B                  mov byte[rbx+rdi], al
+   298 0000021B 48FFC7                  inc rdi
+   299                                 
+   300                                 ..@7.popLoop:
+   301 0000021E 58                      pop rax
+   302                                 
+   303 0000021F 0430                    add al, "0"
+   304                                 
+   305 00000221 88043B                  mov byte[rbx+rdi], al
+   306 00000224 48FFC7                  inc rdi
+   307 00000227 E2F3                    loop ..@7.popLoop
+   308                                 
+   309                                 
+   310 00000229 C6443B0100              mov byte[rbx+rdi+1], 0
+   311 0000022E EB06                    jmp ..@7.endMacro
+   312                                 
+   313                                 ..@7.zero:
+   314 00000230 C60425[00000000]30      mov byte[strNum4], "0"
+   315                                 
+   316                                 ..@7.endMacro:
+   317                                 
+   318                                 %line 127+1 proj11-4.asm
+   319                                 
+   320                                 %line 127+0 proj11-4.asm
+   321                                 
+   322                                 
+   323 00000238 8B0425[00000000]        mov eax, dword[intNum5]
+   324                                 
+   325 0000023F 83F800                  cmp eax, 0
+   326 00000242 7F18                    jg ..@8.positive
+   327 00000244 83F800                  cmp eax, 0
+   328 00000247 7473                    je ..@8.zero
+   329 00000249 C70425[00000000]FF-     mov dword[intSign], -1
+   330 00000249 FFFFFF             
+   331 00000254 C60425[00000000]2D      mov byte[strSign], "-"
+   332 0000025C EB11                    jmp ..@8.initialize
+   333                                 
+   334                                 ..@8.positive:
+   335 0000025E C70425[00000000]01-     mov dword[intSign], 1
+   336 0000025E 000000             
+   337 00000269 C60425[00000000]2B      mov byte[strSign], "+"
+   338                                 
+   339                                 ..@8.initialize:
+   340 00000271 48C7C100000000          mov rcx, 0
+   341 00000278 BB0A000000              mov ebx, 10
+   342                                 
+   343                                 ..@8.divideLoop:
+   344 0000027D 99                      cdq
+   345 0000027E F7FB                    idiv ebx
+   346 00000280 0FAF1425[00000000]      imul edx, dword[intSign]
+   347                                 
+   348 00000288 52                      push rdx
+   349 00000289 48FFC1                  inc rcx
+   350                                 
+   351 0000028C 83F800                  cmp eax, 0
+   352 0000028F 75EA                    jne ..@8.divideLoop
+   353                                 
+   354                                 
+   355                                 
+   356                                 
+   357 00000291 48C7C3[00000000]        mov rbx, strNum5
+   358 00000298 48C7C700000000          mov rdi, 0
+   359                                 
+   360 0000029F 8A0425[00000000]        mov al, byte[strSign]
+   361 000002A6 88043B                  mov byte[rbx+rdi], al
+   362 000002A9 48FFC7                  inc rdi
+   363                                 
+   364                                 ..@8.popLoop:
+   365 000002AC 58                      pop rax
+   366                                 
+   367 000002AD 0430                    add al, "0"
+   368                                 
+   369 000002AF 88043B                  mov byte[rbx+rdi], al
+   370 000002B2 48FFC7                  inc rdi
+   371 000002B5 E2F3                    loop ..@8.popLoop
+   372                                 
+   373                                 
+   374 000002B7 C6443B0100              mov byte[rbx+rdi+1], 0
+   375 000002BC EB06                    jmp ..@8.endMacro
+   376                                 
+   377                                 ..@8.zero:
+   378 000002BE C60425[00000000]30      mov byte[strNum5], "0"
+   379                                 
+   380                                 ..@8.endMacro:
+   381                                 
+   382                                 %line 128+1 proj11-4.asm
+   383                                 
+   384                                 
+   385                                 
+   386                                 
+   387                                 last:
+   388 000002C6 48C7C03C000000          mov rax, SYS_exit
+   389 000002CD 48C7C700000000          mov rdi, EXIT_SUCCESS
+   390 000002D4 0F05                    syscall
