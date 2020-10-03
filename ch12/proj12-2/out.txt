@@ -1,0 +1,17 @@
+Average of the list 
+0x40201c:	35
+
+Sum of the list
+0x402020:	210
+
+Minimum value
+0x402024:	10
+
+Maximum value
+0x402028:	60
+
+Median values
+0x40202c:	30
+0x402030:	40
+
+

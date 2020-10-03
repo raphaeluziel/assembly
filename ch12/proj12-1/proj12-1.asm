@@ -1,4 +1,4 @@
-; Chapter 12
+; This program uses a leaf function to find the sum and average of a list
 
 ; *****************************************************************************
 ; Data declarations
@@ -14,7 +14,7 @@ SYS_exit         equ      60            ; caxl code for terminate
 ; -----
 ; Define data
 
-arr         dd        4, 5, 2, -3, 1
+arr         dd        10, 20, 30, 40, 50
 len         dd        5
 ave         dd        0
 sum         dd        0

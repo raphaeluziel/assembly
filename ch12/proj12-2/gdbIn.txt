@@ -9,10 +9,22 @@ set logging file out.txt
 set logging overwrite
 set logging on
 set prompt
-echo ------------------------------------------------------------ \n
-echo Averages of the two lists \n\n
 
+echo Average of the list \n
 x/dw &ave
+
+echo \nSum of the list\n
+x/dw &sum
+
+echo \nMinimum value\n
+x/dw &min
+
+echo \nMaximum value\n
+x/dw &max
+
+echo \nMedian values\n
+x/dw &med1
+x/dw &med2
 
 echo \n\n
 set logging off

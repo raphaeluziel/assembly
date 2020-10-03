@@ -1,0 +1,7 @@
+Average of the list 
+0x402018:	30
+
+Sum of the list
+0x40201c:	150
+
+
