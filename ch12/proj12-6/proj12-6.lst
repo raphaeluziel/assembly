@@ -1,0 +1,166 @@
+     1                                 %line 1+1 proj12-6.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 
+    10                                 
+    11                                 
+    12                                 [section .data]
+    13                                 
+    14                                 
+    15                                 
+    16                                 
+    17                                 EXIT_SUCCESS equ 0
+    18                                 SYS_exit equ 60
+    19                                 
+    20                                 
+    21                                 
+    22                                 
+    23 00000000 AF5EACA6               intNum1 dd -1498653009
+    24 00000004 DA050000               intNum2 dd +1498
+    25 00000008 FDFEFFFF               intNum3 dd -259
+    26 0000000C FAFFFFFF               intNum4 dd -6
+    27 00000010 00000000               intNum5 dd 0
+    28                                 
+    29 00000014 01000000               intSign dd 1
+    30 00000018 2B                     strSign db "+"
+    31 00000019 00                     NULL db 0
+    32                                 
+    33                                 
+    34                                 
+    35                                 
+    36                                 
+    37                                 [section .bss]
+    38                                 
+    39 00000000 <gap>                  strNum1 resb 100
+    40 00000064 <gap>                  strNum2 resb 100
+    41 000000C8 <gap>                  strNum3 resb 100
+    42 0000012C <gap>                  strNum4 resb 100
+    43 00000190 <gap>                  strNum5 resb 100
+    44                                 
+    45                                 
+    46                                 
+    47                                 
+    48                                 [section .text]
+    49                                 
+    50                                 
+    51                                 
+    52                                 [global toChar]
+    53                                 toChar:
+    54                                 
+    55                                 
+    56                                 
+    57                                 
+    58                                 
+    59                                 
+    60 00000000 55                      push rbp
+    61 00000001 53                      push rbx
+    62 00000002 51                      push rcx
+    63 00000003 52                      push rdx
+    64 00000004 4889E5                  mov rbp, rsp
+    65                                 
+    66                                 
+    67                                 
+    68 00000007 89F8                    mov eax, edi
+    69                                 
+    70 00000009 83F800                  cmp eax, 0
+    71 0000000C 7F18                    jg positive
+    72 0000000E 83F800                  cmp eax, 0
+    73 00000011 7472                    je zero
+    74 00000013 C70425[00000000]FF-     mov dword[intSign], -1
+    75 00000013 FFFFFF             
+    76 0000001E C60425[00000000]2D      mov byte[strSign], "-"
+    77 00000026 EB11                    jmp initialize
+    78                                 
+    79                                  positive:
+    80 00000028 C70425[00000000]01-     mov dword[intSign], 1
+    81 00000028 000000             
+    82 00000033 C60425[00000000]2B      mov byte[strSign], "+"
+    83                                 
+    84                                  initialize:
+    85 0000003B 48C7C100000000          mov rcx, 0
+    86 00000042 BB0A000000              mov ebx, 10
+    87                                 
+    88                                  divideLoop:
+    89 00000047 99                      cdq
+    90 00000048 F7FB                    idiv ebx
+    91 0000004A 0FAF1425[00000000]      imul edx, dword[intSign]
+    92                                 
+    93 00000052 52                      push rdx
+    94 00000053 48FFC1                  inc rcx
+    95                                 
+    96 00000056 83F800                  cmp eax, 0
+    97 00000059 75EA                    jne divideLoop
+    98                                 
+    99                                 
+   100                                 
+   101                                 
+   102 0000005B 4889F3                  mov rbx, rsi
+   103 0000005E 49C7C200000000          mov r10, 0
+   104                                 
+   105 00000065 8A0425[00000000]        mov al, byte[strSign]
+   106 0000006C 42880413                mov byte[rbx+r10], al
+   107 00000070 49FFC2                  inc r10
+   108                                 
+   109                                  popLoop:
+   110 00000073 58                      pop rax
+   111                                 
+   112 00000074 0430                    add al, "0"
+   113                                 
+   114 00000076 42880413                mov byte[rbx+r10], al
+   115 0000007A 49FFC2                  inc r10
+   116 0000007D E2F2                    loop popLoop
+   117                                 
+   118                                 
+   119 0000007F 42C644130100            mov byte[rbx+r10+1], 0
+   120 00000085 EB01                    jmp endFunction
+   121                                 
+   122                                  zero:
+   123 00000087 C60630                  mov byte[rsi], "0"
+   124                                 
+   125                                  endFunction:
+   126 0000008A 5A                      pop rdx
+   127 0000008B 59                      pop rcx
+   128 0000008C 5B                      pop rbx
+   129 0000008D 5D                      pop rbp
+   130 0000008E C3                      ret
+   131                                 
+   132                                 
+   133                                 [global main]
+   134                                 main:
+   135                                 
+   136                                 
+   137                                 
+   138                                 
+   139 0000008F 8B3C25[00000000]        mov edi, dword[intNum1]
+   140 00000096 48C7C6[00000000]        mov rsi, strNum1
+   141 0000009D E859FFFFFF              call toChar
+   142                                 
+   143 000000A2 8B3C25[00000000]        mov edi, dword[intNum2]
+   144 000000A9 48C7C6[00000000]        mov rsi, strNum2
+   145 000000B0 E846FFFFFF              call toChar
+   146                                 
+   147 000000B5 8B3C25[00000000]        mov edi, dword[intNum3]
+   148 000000BC 48C7C6[00000000]        mov rsi, strNum3
+   149 000000C3 E833FFFFFF              call toChar
+   150                                 
+   151 000000C8 8B3C25[00000000]        mov edi, dword[intNum4]
+   152 000000CF 48C7C6[00000000]        mov rsi, strNum4
+   153 000000D6 E820FFFFFF              call toChar
+   154                                 
+   155 000000DB 8B3C25[00000000]        mov edi, dword[intNum5]
+   156 000000E2 48C7C6[00000000]        mov rsi, strNum5
+   157 000000E9 E80DFFFFFF              call toChar
+   158                                 
+   159                                 
+   160                                 
+   161                                 
+   162                                 
+   163                                 last:
+   164 000000EE 48C7C03C000000          mov rax, SYS_exit
+   165 000000F5 48C7C700000000          mov rdi, EXIT_SUCCESS
+   166 000000FC 0F05                    syscall

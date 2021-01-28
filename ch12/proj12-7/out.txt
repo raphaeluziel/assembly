@@ -1,0 +1,16 @@
+------------------------------------------------------------ 
+convert ascii character representation of number to int number 
+
+Message:
+0x404088:	""
+0x404034:	-4928476022
+
+Message:
+0x4040ba:	""
+0x404042:	1345
+
+Message:
+0x4040ec:	"ERROR - String not formatted correctly"
+0x40404d:	0
+
+

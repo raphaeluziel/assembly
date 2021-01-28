@@ -73,7 +73,7 @@
     73 00000024 8A86[00000000]          mov al, byte[errorMess+rsi]
     74 0000002A 8886[00000000]          mov byte[strError+rsi], al
     75 00000030 3C00                    cmp al, 0
-    76 00000032 7473                    je last
+    76 00000032 746B                    je last
     77 00000034 48FFC6                  inc rsi
     78 00000037 E2E9                    loop errorMessLoop
     79                                 
@@ -111,7 +111,7 @@
    111 00000065 58                      pop rax
    112                                 
    113 00000066 3C2B                    cmp al, "+"
-   114 00000068 743D                    je last
+   114 00000068 7435                    je last
    115 0000006A 3C2D                    cmp al, "-"
    116 0000006C 741B                    je negative
    117                                 
@@ -128,14 +128,14 @@
    128 0000008B 488B0425[00000000]      mov rax, qword[intNum]
    129 00000093 486BC0FF                imul rax, -1
    130 00000097 48890425[00000000]      mov qword[intNum], rax
-   131 0000009F 48F71C25[00000000]      neg qword[intNum]
-   132 000000A7 EBFE                    jmp last
+   131                                 
+   132 0000009F EBFE                    jmp last
    133                                 
    134                                 
    135                                 
    136                                 
    137                                 
    138                                 last:
-   139 000000A9 48C7C03C000000          mov rax, SYS_exit
-   140 000000B0 48C7C700000000          mov rdi, EXIT_SUCCESS
-   141 000000B7 0F05                    syscall
+   139 000000A1 48C7C03C000000          mov rax, SYS_exit
+   140 000000A8 48C7C700000000          mov rdi, EXIT_SUCCESS
+   141 000000AF 0F05                    syscall

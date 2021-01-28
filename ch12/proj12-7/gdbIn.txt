@@ -1,0 +1,29 @@
+# ----------------------------------------------------
+#   Debugger Input Script
+# ----------------------------------------------------
+echo \n\n
+break last
+run
+set pagination off
+set logging file out.txt
+set logging overwrite
+set logging on
+set prompt
+echo ------------------------------------------------------------ \n
+echo convert ascii character representation of number to int number \n\n
+
+echo Message:\n
+x/s  &strError1
+x/dg &intNum1
+
+echo \nMessage:\n
+x/s  &strError2
+x/dg &intNum2
+
+echo \nMessage:\n
+x/s  &strError3
+x/dg &intNum3
+
+echo \n\n
+set logging off
+quit

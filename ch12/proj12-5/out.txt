@@ -1,0 +1,67 @@
+Square Root of0x404100:	459806732
+is equal to0x404104:	21443
+
+
+--------------------------
+
+Sorted Array 
+0x404028:	0	2	5	7
+0x404038:	9	12	12	32
+0x404048:	32	42	62	67
+0x404058:	76	93	200	908
+0x404068:	7000	8000	8976	9000
+
+Average of the list0x40407c:	1726
+
+Sum of the list0x404080:	34535
+
+Minimum value0x404084:	0
+
+Maximum value0x404088:	9000
+
+Median value10x40408c:	42
+
+Median value20x404090:	62
+
+Standard deviation0x404094:	3285
+
+
+--------------------------
+
+Sorted Array 2 
+0x404098:	1	2	3
+
+Average of the list0x4040a8:	2
+
+Sum of the list0x4040ac:	6
+
+Minimum value0x4040b0:	1
+
+Maximum value0x4040b4:	3
+
+Median value10x4040b8:	2
+
+Median value20x4040bc:	2
+
+Standard deviation0x4040c0:	0
+
+
+--------------------------
+
+Sorted Array 3 
+0x4040c4:	-3	0	2	2
+0x4040d4:	3	3	9
+
+Average of the list0x4040e4:	2
+
+Sum of the list0x4040e8:	16
+
+Minimum value0x4040ec:	-3
+
+Maximum value0x4040f0:	9
+
+Median value10x4040f4:	2
+
+Median value20x4040f8:	2
+
+Standard deviation0x4040fc:	3

@@ -4,7 +4,7 @@
 ; to the string
 
 ; Raphael Uziel
-; August 21, 2020WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+; August 21, 2020
 
 ; *****************************************************************************
 ; Some basic data declarations

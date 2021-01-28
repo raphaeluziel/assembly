@@ -1,0 +1,23 @@
+# ----------------------------------------------------
+#   Debugger Input Script
+# ----------------------------------------------------
+echo \n\n
+break last
+run
+set pagination off
+set logging file out.txt
+set logging overwrite
+set logging on
+set prompt
+echo ------------------------------------------------------------ \n
+echo convert integer to ascii characters \n\n
+
+x/s &strNum1
+x/s &strNum2
+x/s &strNum3
+x/s &strNum4
+x/s &strNum5
+
+echo \n\n
+set logging off
+quit

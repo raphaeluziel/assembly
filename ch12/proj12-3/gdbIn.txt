@@ -1,0 +1,24 @@
+# ----------------------------------------------------
+#   Debugger Input Script
+# ----------------------------------------------------
+echo \n\n
+break last
+run
+set pagination off
+set logging file out.txt
+set logging overwrite
+set logging on
+set prompt
+
+echo Sorted Array \n
+x/20dw &arr
+
+echo Sorted Array 2 \n
+x/3dw &arr2
+
+echo Sorted Array 3 \n
+x/7dw &arr3
+
+echo \n\n
+set logging off
+quit

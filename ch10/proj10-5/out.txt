@@ -3,6 +3,6 @@ convert ascii character representation of number to int number
 
 Message:
 0x402044:	""
-0x40200c:	4928476022
+0x40200c:	-4928476022
 
 

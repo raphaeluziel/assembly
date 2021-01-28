@@ -1,0 +1,77 @@
+# ----------------------------------------------------
+#   Debugger Input Script
+# ----------------------------------------------------
+echo \n\n
+break last
+run
+set pagination off
+set logging file out.txt
+set logging overwrite
+set logging on
+set prompt
+
+echo Square Root of
+x/dw &iNumber
+echo is equal to
+x/dw &iSqrt
+
+echo \n\n--------------------------\n\n
+
+echo Sorted Array \n
+x/20dw &arr
+echo \nAverage of the list
+x/dw &ave
+echo \nSum of the list
+x/dw &sum
+echo \nMinimum value
+x/dw &min
+echo \nMaximum value
+x/dw &max
+echo \nMedian value1
+x/dw &med1
+echo \nMedian value2
+x/dw &med2
+echo \nStandard deviation
+x/dw &sdv
+
+echo \n\n--------------------------\n\n
+
+echo Sorted Array 2 \n
+x/3dw &arr2
+echo \nAverage of the list
+x/dw &ave2
+echo \nSum of the list
+x/dw &sum2
+echo \nMinimum value
+x/dw &min2
+echo \nMaximum value
+x/dw &max2
+echo \nMedian value1
+x/dw &med1_2
+echo \nMedian value2
+x/dw &med2_2
+echo \nStandard deviation
+x/dw &sdv2
+
+echo \n\n--------------------------\n\n
+
+echo Sorted Array 3 \n
+x/7dw &arr3
+echo \nAverage of the list
+x/dw &ave3
+echo \nSum of the list
+x/dw &sum3
+echo \nMinimum value
+x/dw &min3
+echo \nMaximum value
+x/dw &max3
+echo \nMedian value1
+x/dw &med1_3
+echo \nMedian value2
+x/dw &med2_3
+echo \nStandard deviation
+x/dw &sdv3
+
+
+set logging off
+quit
