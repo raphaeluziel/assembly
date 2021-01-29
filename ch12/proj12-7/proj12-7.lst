@@ -25,163 +25,149 @@
     25                                 EXIT_SUCCESS equ 0
     26                                 SYS_exit equ 60
     27                                 
-    28                                 
-    29                                 
+    28                                 TRUE equ 1
+    29                                 FALSE equ 0
     30                                 
-    31 00000000 2D3439323834373630-    strNum1 db "-4928476022", 0
-    32 00000000 323200             
-    33 0000000C 0000000000000000       intNum1 dq 0
-    34 00000014 2B3133343500           strNum2 db "+1345", 0
-    35 0000001A 0000000000000000       intNum2 dq 0
-    36 00000022 693930                 strNum3 db "i90"
-    37 00000025 0000000000000000       intNum3 dq 0
-    38                                 
-    39 0000002D 0A00000000000000       ten dq 10
-    40 00000035 4552524F52202D2053-    errorMess db "ERROR - String not formatted correctly", 0
-    41 00000035 7472696E67206E6F74-
-    42 00000035 20666F726D61747465-
-    43 00000035 6420636F7272656374-
-    44 00000035 6C7900             
-    45                                 
+    31                                 
+    32                                 
+    33                                 
+    34 00000000 2D3439323834373630-    strNum1 db "-4928476022", 0
+    35 00000000 323200             
+    36 0000000C 0000000000000000       intNum1 dq 0
+    37 00000014 00                     err1 db 0
+    38 00000015 2B3133343500           strNum2 db "+1345", 0
+    39 0000001B 0000000000000000       intNum2 dq 0
+    40 00000023 00                     err2 db 0
+    41 00000024 693930                 strNum3 db "i90"
+    42 00000027 0000000000000000       intNum3 dq 0
+    43 0000002F 00                     err3 db 0
+    44                                 
+    45 00000030 0A00000000000000       ten dq 10
     46                                 
     47                                 
     48                                 
     49                                 
-    50                                 [section .bss]
-    51                                 
-    52 00000000 <gap>                  strError1 resb 50
-    53 00000032 <gap>                  strError2 resb 50
-    54 00000064 <gap>                  strError3 resb 50
-    55                                 
-    56                                 
+    50                                 
+    51                                 [section .text]
+    52                                 
+    53                                 
+    54                                 
+    55                                 [global toInteger]
+    56                                 toInteger:
     57                                 
     58                                 
-    59                                 [section .text]
+    59                                 
     60                                 
     61                                 
     62                                 
-    63                                 [global toInteger]
-    64                                 toInteger:
-    65                                 
-    66                                 
+    63 00000000 55                      push rbp
+    64 00000001 51                      push rcx
+    65 00000002 53                      push rbx
+    66 00000003 4889E5                  mov rbp, rsp
     67                                 
     68                                 
     69                                 
     70                                 
-    71 00000000 55                      push rbp
-    72 00000001 51                      push rcx
-    73 00000002 53                      push rbx
-    74 00000003 4889E5                  mov rbp, rsp
-    75                                 
-    76                                 
-    77                                 
-    78                                 
-    79                                 
-    80 00000006 49C7C200000000          mov r10, 0
-    81 0000000D 48C7C000000000          mov rax, 0
-    82                                 
-    83 00000014 8A06                    mov al, byte[rsi]
-    84 00000016 3C2B                    cmp al, "+"
-    85 00000018 741D                    je addSignToStack
-    86 0000001A 3C2D                    cmp al, "-"
-    87 0000001C 7419                    je addSignToStack
+    71                                 
+    72 00000006 49C7C200000000          mov r10, 0
+    73 0000000D 48C7C000000000          mov rax, 0
+    74                                 
+    75 00000014 8A06                    mov al, byte[rsi]
+    76 00000016 3C2B                    cmp al, "+"
+    77 00000018 740B                    je addSignToStack
+    78 0000001A 3C2D                    cmp al, "-"
+    79 0000001C 7407                    je addSignToStack
+    80                                 
+    81                                  returnError:
+    82 0000001E 48C7C000000000          mov rax, FALSE
+    83 00000025 EB53                    jmp endFunction
+    84                                 
+    85                                  addSignToStack:
+    86 00000027 50                      push rax
+    87 00000028 49FFC2                  inc r10
     88                                 
-    89                                  initializeError:
-    90 0000001E 49C7C200000000          mov r10, 0
-    91                                 
-    92                                  errorMessLoop:
-    93 00000025 418A82[00000000]        mov al, byte[errorMess+r10]
-    94 0000002C 42880412                mov byte[rdx+r10], al
-    95 00000030 3C00                    cmp al, 0
-    96 00000032 7458                    je endFunction
-    97 00000034 49FFC2                  inc r10
-    98 00000037 E2EA                    loop errorMessLoop
-    99                                 
-   100                                  addSignToStack:
-   101 00000039 50                      push rax
-   102 0000003A 49FFC2                  inc r10
+    89                                  addCharToStack:
+    90 0000002B 428A0416                mov al, byte[rsi+r10]
+    91 0000002F 3C00                    cmp al, 0
+    92 00000031 740E                    je startPop
+    93                                 
+    94 00000033 3C30                    cmp al, "0"
+    95 00000035 7CE5                    jl returnError
+    96 00000037 3C39                    cmp al, "9"
+    97 00000039 7FE1                    jg returnError
+    98                                 
+    99 0000003B 50                      push rax
+   100 0000003C 49FFC2                  inc r10
+   101 0000003F E2E8                    loop addCharToStack
+   102                                 
    103                                 
-   104                                  addCharToStack:
-   105 0000003D 428A0416                mov al, byte[rsi+r10]
-   106 00000041 3C00                    cmp al, 0
-   107 00000043 740E                    je startPop
+   104                                 
+   105 00000041 EBD9                    jmp returnError
+   106                                 
+   107                                 
    108                                 
-   109 00000045 3C30                    cmp al, "0"
-   110 00000047 7CD3                    jl initializeError
-   111 00000049 3C39                    cmp al, "9"
-   112 0000004B 7FCF                    jg initializeError
-   113                                 
-   114 0000004D 50                      push rax
-   115 0000004E 49FFC2                  inc r10
-   116 00000051 E2E8                    loop addCharToStack
+   109                                 
+   110                                 
+   111                                  startPop:
+   112 00000043 48C7C100000000          mov rcx, 0
+   113 0000004A 48C7C301000000          mov rbx, 1
+   114                                 
+   115                                  convertToInt:
+   116 00000051 58                      pop rax
    117                                 
-   118                                 
-   119                                 
-   120 00000053 EBC7                    jmp initializeError
-   121                                 
+   118 00000052 3C2B                    cmp al, "+"
+   119 00000054 741D                    je noError
+   120 00000056 3C2D                    cmp al, "-"
+   121 00000058 7416                    je negative
    122                                 
-   123                                 
-   124                                 
-   125                                 
-   126                                  startPop:
-   127 00000055 48C7C100000000          mov rcx, 0
-   128 0000005C 48C7C301000000          mov rbx, 1
-   129                                 
-   130                                  convertToInt:
-   131 00000063 58                      pop rax
-   132                                 
-   133 00000064 3C2B                    cmp al, "+"
-   134 00000066 7424                    je endFunction
-   135 00000068 3C2D                    cmp al, "-"
-   136 0000006A 7416                    je negative
+   123 0000005A 2C30                    sub al, "0"
+   124 0000005C 48F7E3                  mul rbx
+   125 0000005F 480107                  add qword[rdi], rax
+   126                                 
+   127 00000062 4889D8                  mov rax, rbx
+   128 00000065 48F72425[00000000]      mul qword[ten]
+   129 0000006D 4889C3                  mov rbx, rax
+   130 00000070 E2DD                    loop convertToInt
+   131                                 
+   132                                  negative:
+   133 00000072 48F71F                  neg qword[rdi]
+   134                                 
+   135                                  noError:
+   136 00000075 48C7C001000000          mov rax, TRUE
    137                                 
-   138 0000006C 2C30                    sub al, "0"
-   139 0000006E 48F7E3                  mul rbx
-   140 00000071 480107                  add qword[rdi], rax
-   141                                 
-   142 00000074 4889D8                  mov rax, rbx
-   143 00000077 48F72425[00000000]      mul qword[ten]
-   144 0000007F 4889C3                  mov rbx, rax
-   145 00000082 E2DD                    loop convertToInt
-   146                                 
-   147                                  negative:
-   148 00000084 488B07                  mov rax, qword[rdi]
-   149 00000087 486BC0FF                imul rax, -1
-   150 0000008B 488907                  mov qword[rdi], rax
-   151                                 
-   152                                  endFunction:
-   153 0000008E 5B                      pop rbx
-   154 0000008F 59                      pop rcx
-   155 00000090 5D                      pop rbp
-   156 00000091 C3                      ret
-   157                                 
-   158                                 
-   159                                 [global main]
-   160                                 main:
-   161                                 
-   162                                 
-   163                                 
-   164                                 
-   165 00000092 48C7C2[00000000]        mov rdx, strError1
-   166 00000099 48C7C6[00000000]        mov rsi, strNum1
-   167 000000A0 48C7C7[00000000]        mov rdi, intNum1
-   168 000000A7 E84FFFFFFF              call toInteger
+   138                                  endFunction:
+   139 0000007C 5B                      pop rbx
+   140 0000007D 59                      pop rcx
+   141 0000007E 5D                      pop rbp
+   142 0000007F C3                      ret
+   143                                 
+   144                                 
+   145                                 [global main]
+   146                                 main:
+   147                                 
+   148                                 
+   149                                 
+   150                                 
+   151 00000080 48C7C6[00000000]        mov rsi, strNum1
+   152 00000087 48C7C7[00000000]        mov rdi, intNum1
+   153 0000008E E868FFFFFF              call toInteger
+   154 00000093 880425[00000000]        mov byte[err1], al
+   155                                 
+   156 0000009A 48C7C6[00000000]        mov rsi, strNum2
+   157 000000A1 48C7C7[00000000]        mov rdi, intNum2
+   158 000000A8 E84EFFFFFF              call toInteger
+   159 000000AD 880425[00000000]        mov byte[err2], al
+   160                                 
+   161 000000B4 48C7C6[00000000]        mov rsi, strNum3
+   162 000000BB 48C7C7[00000000]        mov rdi, intNum3
+   163 000000C2 E834FFFFFF              call toInteger
+   164 000000C7 880425[00000000]        mov byte[err3], al
+   165                                 
+   166                                 
+   167                                 
+   168                                 
    169                                 
-   170 000000AC 48C7C2[00000000]        mov rdx, strError2
-   171 000000B3 48C7C6[00000000]        mov rsi, strNum2
-   172 000000BA 48C7C7[00000000]        mov rdi, intNum2
-   173 000000C1 E835FFFFFF              call toInteger
-   174                                 
-   175 000000C6 48C7C2[00000000]        mov rdx, strError3
-   176 000000CD 48C7C6[00000000]        mov rsi, strNum3
-   177 000000D4 48C7C7[00000000]        mov rdi, intNum3
-   178 000000DB E81BFFFFFF              call toInteger
-   179                                 
-   180                                 
-   181                                 
-   182                                 
-   183                                 
-   184                                 last:
-   185 000000E0 48C7C03C000000          mov rax, SYS_exit
-   186 000000E7 48C7C700000000          mov rdi, EXIT_SUCCESS
-   187 000000EE 0F05                    syscall
+   170                                 last:
+   171 000000CE 48C7C03C000000          mov rax, SYS_exit
+   172 000000D5 48C7C700000000          mov rdi, EXIT_SUCCESS
+   173 000000DC 0F05                    syscall

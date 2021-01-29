@@ -24,28 +24,24 @@ section         .data
 EXIT_SUCCESS     equ      0        ; succesful operation
 SYS_exit         equ      60       ; caxl code for terminate
 
+TRUE             equ      1
+FALSE            equ      0
+
 ; -----
 ; Define data
 
 strNum1         db      "-4928476022", 0  ; null terminated string
 intNum1         dq      0                 ; int is the actual number
+err1            db      0                 ; was error found?
 strNum2         db      "+1345", 0
 intNum2         dq      0
+err2            db      0
 strNum3         db      "i90"
 intNum3         dq      0
+err3            db      0
 
 ten             dq      10                ; the multiplier
-errorMess       db      "ERROR - String not formatted correctly", 0
 
-; -----
-; Uninitialized Data
-; In this section, memory is reserved for variables, but no values yet are given
-
-section         .bss
-
-strError1        resb    50
-strError2        resb    50
-strError3        resb    50
 
 ; *****************************************************************************
 ; Code Section
@@ -53,7 +49,7 @@ strError3        resb    50
 section          .text
 
 
-; FUNCTION toChar *************************************************************
+; FUNCTION toInteger **********************************************************
 global toInteger
 toInteger:
   ; toInteger(intNum, strNum)
@@ -80,16 +76,9 @@ toInteger:
     cmp     al, "-"
     je      addSignToStack
 
-  initializeError:
-    mov     r10, 0
-
-  errorMessLoop:
-    mov     al, byte[errorMess+r10] ; all this to add the error message
-    mov     byte[rdx+r10], al
-    cmp     al, 0
-    je      endFunction
-    inc     r10
-    loop    errorMessLoop
+  returnError:
+    mov     rax, FALSE
+    jmp     endFunction
 
   addSignToStack:
     push    rax
@@ -101,9 +90,9 @@ toInteger:
     je      startPop
 
     cmp     al, "0"
-    jl      initializeError
+    jl      returnError
     cmp     al, "9"
-    jg      initializeError
+    jg      returnError
 
     push    rax                     ; push character into the stack
     inc     r10                     ; index++
@@ -111,7 +100,7 @@ toInteger:
 
     ; if this is reached, string is not NULL terminated, however, it might be
     ; null terminated by accident (who knows what's in the stack after the string)
-    jmp     initializeError
+    jmp     returnError
 
 
   ; ----------
@@ -125,7 +114,7 @@ toInteger:
     pop     rax                     ; get the top of the stack
 
     cmp     al, "+"                 ; have we reached the "+" or "-"?
-    je      endFunction
+    je      noError
     cmp     al, "-"
     je      negative
 
@@ -139,9 +128,10 @@ toInteger:
     loop    convertToInt
 
   negative:
-    mov     rax, qword[rdi]
-    imul    rax, -1
-    mov     qword[rdi], rax
+    neg     qword[rdi]
+
+  noError:
+    mov     rax, TRUE               ; no errors found
 
   endFunction:
     pop     rbx
@@ -156,20 +146,20 @@ main:
 ; ----------
 ; main program
 
-  mov     rdx, strError1
   mov     rsi, strNum1
   mov     rdi, intNum1
   call    toInteger
+  mov     byte[err1], al
 
-  mov     rdx, strError2
   mov     rsi, strNum2
   mov     rdi, intNum2
   call    toInteger
+  mov     byte[err2], al
 
-  mov     rdx, strError3
   mov     rsi, strNum3
   mov     rdi, intNum3
   call    toInteger
+  mov     byte[err3], al
 
 
 ; *****************************************************************************

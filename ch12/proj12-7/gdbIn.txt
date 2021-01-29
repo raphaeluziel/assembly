@@ -12,16 +12,16 @@ set prompt
 echo ------------------------------------------------------------ \n
 echo convert ascii character representation of number to int number \n\n
 
-echo Message:\n
-x/s  &strError1
+echo Error (1 = no error, 0 = error): 
+x/db &err1
 x/dg &intNum1
 
-echo \nMessage:\n
-x/s  &strError2
+echo \nError (1 = no error, 0 = error): 
+x/db &err2
 x/dg &intNum2
 
-echo \nMessage:\n
-x/s  &strError3
+echo \nError (1 = no error, 0 = error): 
+x/db &err3
 x/dg &intNum3
 
 echo \n\n
