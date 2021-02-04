@@ -1,0 +1,121 @@
+     1                                 %line 1+1 proj13-1.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 
+     6                                 
+     7                                 
+     8                                 
+     9                                 
+    10                                 
+    11                                 [section .data]
+    12                                 
+    13                                 
+    14                                 
+    15                                 
+    16                                 LF equ 10
+    17                                 NULL equ 0
+    18                                 TRUE equ 1
+    19                                 FALSE equ 0
+    20                                 
+    21                                 EXIT_SUCCESS equ 0
+    22                                 
+    23                                 STDIN equ 0
+    24                                 STDOUT equ 1
+    25                                 STDERR equ 2
+    26                                 
+    27                                 SYS_read equ 0
+    28                                 SYS_write equ 1
+    29                                 SYS_open equ 2
+    30                                 SYS_close equ 3
+    31                                 SYS_fork equ 57
+    32                                 SYS_exit equ 60
+    33                                 SYS_creat equ 85
+    34                                 SYS_time equ 201
+    35                                 
+    36                                 
+    37                                 
+    38                                 
+    39 00000000 48656C6C6F20576F72-    message1 db "Hello World.", LF, NULL
+    40 00000000 6C642E0A00         
+    41 0000000E 456E74657220416E73-    message2 db "Enter Answer: ", NULL
+    42 0000000E 7765723A2000       
+    43 0000001D 0A00                   newLine db LF, NULL
+    44                                 
+    45                                 
+    46                                 
+    47                                 
+    48                                 
+    49                                 [section .text]
+    50                                 [global main]
+    51                                 main:
+    52                                 
+    53                                 
+    54                                 
+    55                                 
+    56 00000000 48C7C7[00000000]        mov rdi, message1
+    57 00000007 E823000000              call printString
+    58                                 
+    59 0000000C 48C7C7[00000000]        mov rdi, newLine
+    60 00000013 E817000000              call printString
+    61                                 
+    62                                 
+    63                                 
+    64                                 
+    65 00000018 48C7C7[00000000]        mov rdi, message2
+    66 0000001F E80B000000              call printString
+    67                                 
+    68                                 
+    69                                 
+    70                                 
+    71                                 
+    72                                 exampleDone:
+    73 00000024 48C7C03C000000          mov rax, SYS_exit
+    74 0000002B 48C7C700000000          mov rdi, EXIT_SUCCESS
+    75 00000032 0F05                    syscall
+    76                                 
+    77                                 
+    78                                 
+    79                                 
+    80                                 
+    81                                 
+    82                                 
+    83                                 
+    84                                 
+    85                                 
+    86                                 
+    87                                 
+    88                                 [global printString]
+    89                                 printString:
+    90 00000034 53                      push rbx
+    91                                 
+    92                                 
+    93                                 
+    94                                 
+    95 00000035 4889FB                  mov rbx, rdi
+    96 00000038 48C7C200000000          mov rdx, 0
+    97                                 strCountLoop:
+    98 0000003F 803B00                  cmp byte[rbx], NULL
+    99 00000042 7406                    je strCountDone
+   100 00000044 48FFC2                  inc rdx
+   101 00000047 48FFC3                  inc rbx
+   102 0000004A EBF1                    jmp strCountLoop
+   103                                 strCountDone:
+   104                                 
+   105 0000004C 4883FA00                cmp rdx, 0
+   106 00000050 7411                    je prtDone
+   107                                 
+   108                                 
+   109                                 
+   110                                 
+   111 00000052 48C7C001000000          mov rax, SYS_write
+   112 00000059 4889FE                  mov rsi, rdi
+   113 0000005C 48C7C701000000          mov rdi, STDOUT
+   114 00000063 0F05                    syscall
+   115                                 
+   116                                 
+   117                                 
+   118                                 
+   119                                 prtDone:
+   120 00000065 5B                      pop rbx
+   121 00000066 C3                      ret
